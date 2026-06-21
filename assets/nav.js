@@ -56,10 +56,19 @@
       const open = mob.classList.toggle('open');
       tog.classList.toggle('open', open);
       tog.setAttribute('aria-expanded', open);
+      if (!open) {
+        // Lock overflow during close animation to prevent content bleed
+        mob.style.overflowY = 'hidden';
+        const onEnd = () => { mob.style.overflowY = ''; mob.removeEventListener('transitionend', onEnd); };
+        mob.addEventListener('transitionend', onEnd);
+      }
     } else if (!e.target.closest('#mobile-menu') && !e.target.closest('#navbar')) {
       mob.classList.remove('open');
       tog.classList.remove('open');
       tog.setAttribute('aria-expanded', 'false');
+      mob.style.overflowY = 'hidden';
+      const onEnd = () => { mob.style.overflowY = ''; mob.removeEventListener('transitionend', onEnd); };
+      mob.addEventListener('transitionend', onEnd);
     }
   });
 
@@ -68,7 +77,12 @@
     if (e.target.closest('#mobile-menu a')) {
       const mob = document.getElementById('mobile-menu');
       const tog = document.getElementById('menu-toggle');
-      mob && mob.classList.remove('open');
+      if (mob) {
+        mob.classList.remove('open');
+        mob.style.overflowY = 'hidden';
+        const onEnd = () => { mob.style.overflowY = ''; mob.removeEventListener('transitionend', onEnd); };
+        mob.addEventListener('transitionend', onEnd);
+      }
       tog && tog.classList.remove('open');
       tog && tog.setAttribute('aria-expanded', 'false');
     }

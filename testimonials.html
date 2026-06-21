@@ -64,7 +64,8 @@
         </li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
-        <a href="contact.html" class="btn btn-primary nav-cta">Get Started</a>
+        <a href="contact.html#rfp" class="btn btn-secondary nav-cta">Like RFP</a>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get Started</a>
         <button id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
           <span></span><span></span><span></span>
         </button>
@@ -92,6 +93,7 @@
   <a href="blog.html" class="mobile-sub">Blog</a>
   <a href="faq.html" class="mobile-sub">FAQ</a>
   <a href="contact.html">Contact</a>
+  <a href="contact.html#rfp" class="btn btn-secondary">Like RFP</a>
   <a href="contact.html" class="btn btn-primary">Get Started</a>
   </nav>
 
@@ -119,7 +121,61 @@
         <button class="filter-btn" data-filter="erp">ERP / SaaS</button>
       </div>
       <div class="tgrid" id="tgrid">
-        <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted)">Loading testimonials…</div>
+        <!-- Static fallback cards — replaced by API if available -->
+        <div class="testi-card-lg" data-filter="web">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">engineersTech did an amazing job with this design. I really like how they interpreted our brand. I hope to work with them again soon!</p>
+          <div class="testi-author">
+            <img src="assets/jeremy-nathan-C4Qu9i7M.jpg" alt="Jeremy Nathan" class="testi-avatar" width="48" height="48" loading="lazy"/>
+            <div><div class="testi-name">Jeremy Nathan</div><div class="testi-role">CEO, Industracom — USA</div></div>
+          </div>
+          <span class="testi-platform">Web Development</span>
+        </div>
+        <div class="testi-card-lg" data-filter="uiux">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">engineersTech has an excellent eye for design and attention to detail. They were able to turn a quick project around within hours. Absolutely recommend.</p>
+          <div class="testi-author">
+            <img src="assets/freda-lin-DCbjB4J-.png" alt="Freda Lin" class="testi-avatar" width="48" height="48" loading="lazy"/>
+            <div><div class="testi-name">Freda Lin</div><div class="testi-role">Design Specialist, Ample — Canada</div></div>
+          </div>
+          <span class="testi-platform">UI/UX Design</span>
+        </div>
+        <div class="testi-card-lg" data-filter="web">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">engineersTech is an extremely passionate, talented, and achiever. They deliver projects on time and communicate proactively throughout.</p>
+          <div class="testi-author">
+            <img src="assets/mynul-hasan-DlGcQBIM.jpg" alt="Mynul Hasan" class="testi-avatar" width="48" height="48" loading="lazy"/>
+            <div><div class="testi-name">Mynul Hasan</div><div class="testi-role">Senior Auditor, Intertek — Bangladesh</div></div>
+          </div>
+          <span class="testi-platform">Web Development</span>
+        </div>
+        <div class="testi-card-lg" data-filter="erp">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">The custom ERP they built for our factory operations transformed our workflow. Inventory wastage dropped by 40% within the first quarter. Incredible ROI.</p>
+          <div class="testi-author">
+            <div class="testi-initials">RK</div>
+            <div><div class="testi-name">Rafiqul Karim</div><div class="testi-role">Operations Director, TopGrain — Bangladesh</div></div>
+          </div>
+          <span class="testi-platform">ERP / SaaS</span>
+        </div>
+        <div class="testi-card-lg" data-filter="mobile">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">Our Flutter app was delivered on time with zero critical bugs at launch. The UI polish and performance exceeded our expectations entirely.</p>
+          <div class="testi-author">
+            <div class="testi-initials">SA</div>
+            <div><div class="testi-name">Sophia Anders</div><div class="testi-role">Product Lead, Jodel — Germany</div></div>
+          </div>
+          <span class="testi-platform">Mobile App</span>
+        </div>
+        <div class="testi-card-lg" data-filter="erp">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-quote">We evaluated 5 agencies before choosing engineersTech. Their technical depth and honest communication made the difference. Best decision we made this year.</p>
+          <div class="testi-author">
+            <div class="testi-initials">MB</div>
+            <div><div class="testi-name">Mohammed Al-Badr</div><div class="testi-role">CTO, Chamak — UAE</div></div>
+          </div>
+          <span class="testi-platform">ERP / SaaS</span>
+        </div>
       </div>
     </div>
   </section>
@@ -190,39 +246,44 @@
 </div>
 <script type="module">
 import ET, { escapeHtml } from './assets/api.js';
+
+// Filter buttons
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     const f=btn.dataset.filter;
-    document.querySelectorAll('.tcard').forEach(c=>{c.style.display=(f==='all'||c.dataset.cat===f)?'flex':'none'});
+    document.querySelectorAll('.tgrid [data-filter]').forEach(c=>{
+      c.style.display=(f==='all'||c.dataset.filter===f)?'':'none';
+    });
   });
 });
 
-// Load testimonials from API
-const tgrid=document.querySelector('.tgrid');
+// Reveal animation
+const io=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:.08});
+document.querySelectorAll('.testi-card-lg').forEach(el=>io.observe(el));
+
+// Load testimonials from API (replaces static cards if available)
+const tgrid=document.getElementById('tgrid');
 (async()=>{
   try{
     const data=await ET.getTestimonials();
-    if(!data.length){tgrid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted)">No testimonials yet.</p>';return;}
+    if(!Array.isArray(data)||!data.length) return;
     tgrid.innerHTML=data.map(t=>{
       const stars='★'.repeat(t.rating||5);
-      const escName=escapeHtml(t.name);
-      const avatar=t.photo_url
-        ?`<img src="${escapeHtml(ET.baseURL+'/storage/'+t.photo_url)}" alt="${escName}" class="tavatar" width="48" height="48" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        :'';
+      const escName=escapeHtml(t.name||'');
       const initials=escName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-      const fallback=`<div class="tinit" style="${t.photo_url?'display:none':''}">${initials}</div>`;
-      return`<article class="tcard" data-cat="all">
-        <div class="stars">${stars}</div>
-        <p class="tquote">"${escapeHtml(t.quote)}"</p>
-        <div class="tauthor">
-          ${avatar}${fallback}
-          <div><div class="tname">${escName}</div><div class="trole">${escapeHtml([t.role,t.company].filter(Boolean).join(', '))}</div></div>
-        </div>
-      </article>`;
+      const avatar=t.photo_url
+        ?`<img src="${escapeHtml(ET.baseURL+'/storage/'+t.photo_url)}" alt="${escName}" class="testi-avatar" width="48" height="48" loading="lazy" onerror="this.outerHTML='<div class=testi-initials>${initials}</div>'">`
+        :`<div class="testi-initials">${initials}</div>`;
+      return`<div class="testi-card-lg" data-filter="all">
+        <div class="testi-stars">${stars}</div>
+        <p class="testi-quote">${escapeHtml(t.quote||'')}</p>
+        <div class="testi-author">${avatar}<div><div class="testi-name">${escName}</div><div class="testi-role">${escapeHtml([t.role,t.company].filter(Boolean).join(', '))}</div></div></div>
+      </div>`;
     }).join('');
-  }catch(e){tgrid.innerHTML='<p style="grid-column:1/-1;text-align:center;color:var(--muted)">Could not load testimonials.</p>';}
+    tgrid.querySelectorAll('.testi-card-lg').forEach(el=>io.observe(el));
+  }catch(e){}
 })();
 </script>
 
