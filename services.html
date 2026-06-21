@@ -307,7 +307,7 @@
 <button class="btt" id="btt" aria-label="Back to top"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg></button>
 
 <script type="module">
-import ET from './assets/api.js';
+import ET, { escapeHtml } from './assets/api.js';
 (async()=>{
   try{
     const data=await ET.getServices();
@@ -315,17 +315,17 @@ import ET from './assets/api.js';
     const list=document.querySelector('.services-list');
     if(!list) return;
     list.innerHTML=data.map((s,i)=>`
-      <div id="${s.slug||'svc-'+i}" class="svc-card glass aos d${(i%4)+1}">
+      <div id="${escapeHtml(s.slug||'svc-'+i)}" class="svc-card glass aos d${(i%4)+1}">
         <div class="svc-card-inner">
           <div class="svc-header">
             <div class="svc-icon-box"><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div>
             <div>
-              <div class="svc-title">${s.title||s.name||''}</div>
-              <div class="svc-desc">${s.description||s.desc||''}</div>
+              <div class="svc-title">${escapeHtml(s.title||s.name||'')}</div>
+              <div class="svc-desc">${escapeHtml(s.description||s.desc||'')}</div>
             </div>
           </div>
-          ${s.stack?.length?`<div class="svc-stack">${s.stack.map(t=>`<span class="stack-tag">${t}</span>`).join('')}</div>`:''}
-          ${s.features?.length?`<div class="svc-features-title">Key Capabilities</div><div class="svc-features">${s.features.map(f=>`<div class="svc-feat"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>${f}</div>`).join('')}</div>`:''}
+          ${s.stack?.length?`<div class="svc-stack">${s.stack.map(t=>`<span class="stack-tag">${escapeHtml(t)}</span>`).join('')}</div>`:''}
+          ${s.features?.length?`<div class="svc-features-title">Key Capabilities</div><div class="svc-features">${s.features.map(f=>`<div class="svc-feat"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>${escapeHtml(f)}</div>`).join('')}</div>`:''}
         </div>
       </div>`).join('');
     document.querySelectorAll('.svc-card.aos').forEach(el=>{const io=new IntersectionObserver(e=>{if(e[0].isIntersecting){el.classList.add('visible');io.disconnect();}},{threshold:.08});io.observe(el);});
