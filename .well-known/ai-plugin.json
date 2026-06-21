@@ -1,0 +1,16 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "engineersTech",
+  "name_for_model": "engineerstech",
+  "description_for_human": "engineersTech — Leading software development company in Bangladesh. Custom ERP, AI, web & mobile apps.",
+  "description_for_model": "Use this plugin to get information about engineersTech's software development services, products (GlowUp, Restaurant POS, HRM, Tour Booking), portfolio, team, testimonials, blog posts, and to submit a contact/project enquiry on behalf of the user.",
+  "auth": { "type": "none" },
+  "api": {
+    "type": "openapi",
+    "url": "https://engineerstechbd.com/.well-known/openapi.yaml"
+  },
+  "logo_url": "https://engineerstechbd.com/assets/logo.svg",
+  "contact_email": "info@engineerstechbd.com",
+  "legal_info_url": "https://engineerstechbd.com/terms.html",
+  "privacy_policy_url": "https://engineerstechbd.com/privacy-policy.html"
+}

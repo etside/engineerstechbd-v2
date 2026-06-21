@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: engineersTech API
+  description: Query engineersTech company info, team, testimonials, blog posts, and submit contact enquiries.
+  version: 1.1.0
+servers:
+  - url: https://engineerstechbd.com
+paths:
+  /llms.txt:
+    get:
+      operationId: getCompanyInfo
+      summary: Full company overview — services, products, clients, contact
+      responses:
+        "200":
+          description: Plain-text company context
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /api/testimonials:
+    get:
+      operationId: getTestimonials
+      summary: List client testimonials
+      responses:
+        "200":
+          description: Array of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name: { type: string }
+                    role: { type: string }
+                    company: { type: string }
+                    quote: { type: string }
+                    rating: { type: integer }
+
+  /api/team:
+    get:
+      operationId: getTeam
+      summary: List team members
+      responses:
+        "200":
+          description: Array of team members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name: { type: string }
+                    designation: { type: string }
+                    bio: { type: string }
+
+  /api/blog:
+    get:
+      operationId: getBlogPosts
+      summary: List published blog posts
+      responses:
+        "200":
+          description: Array of blog posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    title: { type: string }
+                    excerpt: { type: string }
+                    category: { type: string }
+                    published_at: { type: string, format: date-time }
+
+  /api/contact:
+    post:
+      operationId: submitContact
+      summary: Submit a contact / project enquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, subject, message]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                phone: { type: string }
+                subject: { type: string }
+                message: { type: string }
+      responses:
+        "200":
+          description: Enquiry received
+        "422":
+          description: Validation error

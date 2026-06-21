@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin CMS — engineersTech</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:222 47% 4%;--fg:210 40% 98%;--card:222 47% 7%;
+  --primary:214 100% 50%;--secondary:222 30% 14%;--muted:215 20% 55%;
+  --border:222 30% 18%;--input:222 30% 18%;--radius:.75rem;
+  --destructive:0 84% 60%;--success:142 76% 36%;--warning:25 95% 53%;--purple:262 83% 58%;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;font-size:14px;line-height:1.6;color:hsl(var(--fg));background:hsl(var(--bg));-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:inherit}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1.5rem;background:radial-gradient(ellipse 80% 60% at 20% 40%,rgba(0,88,204,.12) 0%,transparent 55%),radial-gradient(ellipse 60% 50% at 80% 60%,rgba(36,131,255,.07) 0%,transparent 50%)}
+.login-card{width:100%;max-width:420px;background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:2.5rem;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.login-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#0058cc,#2483ff,#0058cc);background-size:200%;animation:shimmer 3s linear infinite;border-radius:var(--radius) var(--radius) 0 0}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.login-logo{text-align:center;margin-bottom:2rem}
+.login-logo-icon{width:60px;height:60px;margin:0 auto 1rem;background:linear-gradient(135deg,#0058cc,#2483ff);border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,88,204,.4)}
+.login-logo-icon svg{width:32px;height:32px;fill:white}
+.login-logo h1{font-size:1.375rem;font-weight:700;margin-bottom:.25rem}
+.login-logo p{font-size:.875rem;color:hsl(var(--muted))}
+.f-group{margin-bottom:1.125rem}
+.f-label{display:block;font-size:.875rem;font-weight:500;margin-bottom:.5rem}
+.f-input{width:100%;padding:.75rem 1rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:calc(var(--radius) - 2px);color:hsl(var(--fg));font-size:.875rem;font-family:inherit;outline:none;transition:border .2s}
+.f-input:focus{border-color:hsl(var(--primary));box-shadow:0 0 0 3px hsl(var(--primary)/.1)}
+.f-input::placeholder{color:hsl(var(--muted)/.5)}
+.pw-wrap{position:relative}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:hsl(var(--muted));display:flex;align-items:center;justify-content:center}
+.pw-toggle svg{width:18px;height:18px}
+.login-opts{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;font-size:.8125rem}
+.remember{display:flex;align-items:center;gap:.5rem;color:hsl(var(--muted));cursor:pointer}
+.remember input{accent-color:hsl(var(--primary))}
+.forgot{color:hsl(var(--primary))}
+.login-btn{width:100%;padding:.875rem;background:linear-gradient(135deg,#0058cc,#2483ff);color:#fff;border:none;border-radius:calc(var(--radius) - 2px);font-size:.9375rem;font-weight:600;font-family:inherit;transition:all .3s}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,88,204,.45)}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.login-error{display:none;background:hsl(var(--destructive)/.1);border:1px solid hsl(var(--destructive)/.3);color:hsl(var(--destructive));padding:.75rem 1rem;border-radius:calc(var(--radius) - 2px);font-size:.8125rem;margin-bottom:1rem}
+.login-error.show{display:block}
+.login-foot{text-align:center;margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid hsl(var(--border));font-size:.75rem;color:hsl(var(--muted))}
+
+/* LAYOUT */
+.app{display:none;min-height:100vh}.app.active{display:block}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:hsl(var(--card));border-right:1px solid hsl(var(--border));padding:1.25rem;z-index:100;overflow-y:auto;transition:transform .3s;display:flex;flex-direction:column}
+.sb-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid hsl(var(--border))}
+.sb-logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#0058cc,#2483ff);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-logo-icon svg{width:20px;height:20px;fill:white}
+.sb-logo-text{font-size:1rem;font-weight:700;line-height:1.2}
+.sb-logo-text span{font-size:.6875rem;font-weight:400;color:hsl(var(--muted));display:block}
+.nav-sec{margin-bottom:1.25rem}
+.nav-sec-title{font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:hsl(var(--muted));margin-bottom:.5rem;padding-left:.625rem}
+.nav-link{display:flex;align-items:center;gap:.75rem;padding:.6875rem .75rem;border-radius:8px;color:hsl(var(--muted));font-size:.875rem;font-weight:500;transition:all .2s;cursor:pointer;margin-bottom:.125rem;border:none;background:none;width:100%;text-align:left}
+.nav-link:hover{background:hsl(var(--secondary));color:hsl(var(--fg))}
+.nav-link.active{background:hsl(var(--primary)/.12);color:hsl(var(--primary))}
+.nav-link svg{width:17px;height:17px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:hsl(var(--primary));color:#fff;font-size:.625rem;font-weight:700;padding:.125rem .5rem;border-radius:9999px;min-width:20px;text-align:center}
+.sb-bottom{margin-top:auto;padding-top:1rem;border-top:1px solid hsl(var(--border))}
+.logout-btn{display:flex;align-items:center;gap:.75rem;width:100%;padding:.6875rem .75rem;background:none;border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--destructive));font-size:.875rem;font-weight:500;transition:all .2s}
+.logout-btn:hover{background:hsl(var(--destructive)/.08)}
+.logout-btn svg{width:17px;height:17px}
+.main{margin-left:256px;padding:1.5rem;min-height:100vh}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:1px solid hsl(var(--border))}
+.topbar-left{display:flex;align-items:center;gap:1rem}
+.mob-menu-btn{display:none;width:38px;height:38px;background:hsl(var(--secondary));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));align-items:center;justify-content:center}
+.mob-menu-btn svg{width:18px;height:18px}
+.page-title{font-size:1.375rem;font-weight:700}
+.page-subtitle{color:hsl(var(--muted));font-size:.8125rem}
+.topbar-right{display:flex;align-items:center;gap:.75rem}
+.user-chip{display:flex;align-items:center;gap:.625rem;padding:.375rem .875rem .375rem .375rem;background:hsl(var(--secondary));border:1px solid hsl(var(--border));border-radius:9999px;font-size:.8125rem;font-weight:500}
+.user-avatar{width:28px;height:28px;background:linear-gradient(135deg,#0058cc,#2483ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6875rem;font-weight:700;color:#fff}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99}
+.overlay.show{display:block}
+
+/* SECTION PAGES */
+.section-page{display:none}.section-page.active{display:block}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.75rem}
+.stat-card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:1.375rem;transition:all .25s}
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25)}
+.stat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
+.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.stat-icon svg{width:20px;height:20px}
+.stat-icon.blue{background:hsl(214 100% 50%/.12);color:hsl(214 100% 55%)}
+.stat-icon.green{background:hsl(var(--success)/.12);color:hsl(var(--success))}
+.stat-icon.purple{background:hsl(var(--purple)/.12);color:hsl(var(--purple))}
+.stat-icon.orange{background:hsl(var(--warning)/.12);color:hsl(var(--warning))}
+.stat-val{font-size:1.875rem;font-weight:700;line-height:1}
+.stat-lbl{font-size:.75rem;color:hsl(var(--muted));margin-top:.25rem}
+
+/* CARD */
+.card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:1.125rem 1.375rem;border-bottom:1px solid hsl(var(--border))}
+.card-title{font-size:.9375rem;font-weight:600}
+.card-body{padding:1.375rem}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:.8125rem 1rem;border-bottom:1px solid hsl(var(--border))}
+th{font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:hsl(var(--muted));background:hsl(var(--secondary))}
+td{font-size:.8125rem;vertical-align:middle}
+tbody tr:hover td{background:hsl(var(--secondary)/.4)}
+
+/* BADGES */
+.badge{display:inline-block;padding:.2rem .625rem;border-radius:9999px;font-size:.6875rem;font-weight:600}
+.badge-published,.badge-active,.badge-live{background:hsl(var(--success)/.12);color:hsl(var(--success))}
+.badge-draft,.badge-inactive{background:hsl(var(--muted)/.15);color:hsl(var(--muted))}
+.badge-pending{background:hsl(var(--warning)/.12);color:hsl(var(--warning))}
+.badge-delivered{background:hsl(var(--purple)/.12);color:hsl(var(--purple))}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5625rem 1.125rem;border-radius:8px;font-size:.8125rem;font-weight:500;font-family:inherit;transition:all .2s;border:none;cursor:pointer}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+.btn-primary{background:linear-gradient(135deg,#0058cc,#2483ff);color:#fff}
+.btn-primary:hover{box-shadow:0 4px 14px rgba(0,88,204,.45);transform:translateY(-1px)}
+.btn-secondary{background:hsl(var(--secondary));color:hsl(var(--fg));border:1px solid hsl(var(--border))}
+.btn-secondary:hover{background:hsl(var(--secondary)/.7)}
+.btn-danger{background:hsl(var(--destructive)/.1);color:hsl(var(--destructive));border:1px solid hsl(var(--destructive)/.25)}
+.btn-danger:hover{background:hsl(var(--destructive)/.2)}
+.btn-sm{padding:.3125rem .6875rem;font-size:.75rem}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none !important}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1.5rem}
+.modal-overlay.show{display:flex}
+.modal{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;animation:modal-in .25s ease}
+@keyframes modal-in{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.125rem 1.375rem;border-bottom:1px solid hsl(var(--border))}
+.modal-title{font-size:1rem;font-weight:600}
+.modal-close-btn{width:30px;height:30px;background:none;border:none;color:hsl(var(--muted));display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .2s}
+.modal-close-btn:hover{background:hsl(var(--secondary));color:hsl(var(--fg))}
+.modal-close-btn svg{width:17px;height:17px}
+.modal-body{padding:1.375rem}
+.modal-foot{display:flex;justify-content:flex-end;gap:.75rem;padding:1rem 1.375rem;border-top:1px solid hsl(var(--border))}
+
+/* FORM */
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.f-row.full{grid-template-columns:1fr}
+.f-field{margin-bottom:1rem}
+.f-field label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.375rem}
+.f-field input,.f-field select,.f-field textarea{width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none;transition:border .2s}
+.f-field input:focus,.f-field select:focus,.f-field textarea:focus{border-color:hsl(var(--primary))}
+.f-field textarea{resize:vertical;min-height:88px}
+.f-field select option{background:hsl(var(--card))}
+
+/* TOAST */
+.toast-wrap{position:fixed;top:1.25rem;right:1.25rem;z-index:400;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.toast{display:flex;align-items:center;gap:.625rem;padding:.75rem 1.125rem;background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:.8125rem;font-weight:500;animation:t-in .25s ease;pointer-events:auto;min-width:260px}
+.toast svg{width:16px;height:16px;flex-shrink:0}
+.toast.success{border-left:3px solid hsl(var(--success));color:hsl(var(--success))}
+.toast.error{border-left:3px solid hsl(var(--destructive));color:hsl(var(--destructive))}
+.toast.info{border-left:3px solid hsl(214 100% 55%);color:hsl(214 100% 70%)}
+@keyframes t-in{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:3rem 1.5rem;color:hsl(var(--muted))}
+.empty svg{width:52px;height:52px;margin:0 auto 1rem;opacity:.25}
+.empty h3{font-size:.9375rem;font-weight:600;color:hsl(var(--fg));margin-bottom:.375rem}
+.empty p{font-size:.8125rem}
+
+/* ACTIVITY */
+.activity-list{display:flex;flex-direction:column;gap:.875rem}
+.activity-item{display:flex;gap:.875rem;padding:.875rem;background:hsl(var(--secondary));border-radius:8px}
+.act-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.act-icon svg{width:15px;height:15px}
+.act-icon.blue{background:hsl(214 100% 50%/.15);color:hsl(214 100% 60%)}
+.act-icon.green{background:hsl(var(--success)/.15);color:hsl(var(--success))}
+.act-icon.purple{background:hsl(var(--purple)/.15);color:hsl(var(--purple))}
+.act-icon.orange{background:hsl(var(--warning)/.15);color:hsl(var(--warning))}
+.act-body{flex:1}
+.act-title{font-size:.8125rem;font-weight:500;margin-bottom:.125rem}
+.act-desc{font-size:.75rem;color:hsl(var(--muted))}
+.act-time{font-size:.6875rem;color:hsl(var(--muted));white-space:nowrap}
+
+/* SETTINGS */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:.875rem 0;border-bottom:1px solid hsl(var(--border)/.5)}
+.setting-row:last-child{border-bottom:none}
+.setting-info h4{font-size:.875rem;font-weight:500;margin-bottom:.125rem}
+.setting-info p{font-size:.75rem;color:hsl(var(--muted))}
+.toggle{position:relative;width:42px;height:23px;background:hsl(var(--secondary));border:1px solid hsl(var(--border));border-radius:12px;cursor:pointer;transition:all .2s;flex-shrink:0}
+.toggle.on{background:hsl(var(--primary));border-color:hsl(var(--primary))}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:17px;height:17px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle.on::after{transform:translateX(19px)}
+
+/* MESSAGES */
+.msg-list{display:flex;flex-direction:column;gap:.75rem}
+.msg-item{padding:1rem 1.25rem;background:hsl(var(--secondary));border-radius:8px;border-left:3px solid hsl(var(--border));cursor:pointer;transition:all .2s}
+.msg-item.unread{border-left-color:hsl(var(--primary))}
+.msg-item:hover{background:hsl(var(--secondary)/.7)}
+.msg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem}
+.msg-name{font-size:.875rem;font-weight:600}
+.msg-time{font-size:.6875rem;color:hsl(var(--muted))}
+.msg-subject{font-size:.8125rem;font-weight:500;margin-bottom:.25rem}
+.msg-preview{font-size:.75rem;color:hsl(var(--muted));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .mob-menu-btn{display:flex !important}
+  .f-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="cmsModal">
+    <div class="modal-header">
+      <span class="modal-title" id="modalTitle">Title</span>
+      <button class="modal-close-btn" id="modalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot">
+      <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+      <button class="btn btn-primary" id="modalConfirm">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginView">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h1>engineersTech</h1>
+        <p>Admin Dashboard</p>
+      </div>
+      <div class="login-error" id="loginError">Invalid email or password.</div>
+      <form id="loginForm">
+        <div class="f-group">
+          <label class="f-label">Email Address</label>
+          <input type="email" id="loginEmail" class="f-input" placeholder="admin@engineerstechbd.com" required />
+        </div>
+        <div class="f-group">
+          <label class="f-label">Password</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" class="f-input" placeholder="Password" required />
+            <button type="button" class="pw-toggle" id="pwToggle">
+              <svg id="eyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eyeClosed" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="login-opts">
+          <label class="remember"><input type="checkbox" id="rememberMe" /> Remember me</label>
+          <a href="#" class="forgot">Forgot password?</a>
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+      </form>
+      <div class="login-foot"><p>Protected area — unauthorised access prohibited.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div class="app" id="appView">
+  <div class="overlay" id="sidebarOverlay"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+      <div class="sb-logo-text">engineersTech <span>Admin CMS</span></div>
+    </div>
+
+    <nav>
+      <div class="nav-sec">
+        <div class="nav-sec-title">Main</div>
+        <button class="nav-link active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </button>
+        <button class="nav-link" data-page="messages">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Messages
+          <span class="nav-badge" id="msgBadge" style="display:none">0</span>
+        </button>
+      </div>
+      <div class="nav-sec">
+        <div class="nav-sec-title">Content</div>
+        <button class="nav-link" data-page="portfolio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          Portfolio
+        </button>
+        <button class="nav-link" data-page="blog">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Blog Posts
+        </button>
+        <button class="nav-link" data-page="team">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          Team
+        </button>
+        <button class="nav-link" data-page="testimonials">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Testimonials
+        </button>
+        <button class="nav-link" data-page="services">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+          Services
+        </button>
+      </div>
+      <div class="nav-sec">
+        <div class="nav-sec-title">System</div>
+        <button class="nav-link" data-page="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
+          Settings
+        </button>
+      </div>
+    </nav>
+
+    <div class="sb-bottom">
+      <button class="logout-btn" id="logoutBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <!-- Top bar -->
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="mob-menu-btn" id="mobMenuBtn" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div>
+          <div class="page-title" id="pageTitle">Dashboard</div>
+          <div class="page-subtitle" id="pageSubtitle">Overview</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="user-chip">
+          <div class="user-avatar" id="userInitial">A</div>
+          <span id="userEmail">admin</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="section-page active" id="page-dashboard">
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-head"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div></div><div class="stat-val" id="statPortfolio">—</div><div class="stat-lbl">Portfolio Projects</div></div>
+        <div class="stat-card"><div class="stat-head"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div><div class="stat-val" id="statTeam">—</div><div class="stat-lbl">Team Members</div></div>
+        <div class="stat-card"><div class="stat-head"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div></div><div class="stat-val" id="statBlog">—</div><div class="stat-lbl">Blog Posts</div></div>
+        <div class="stat-card"><div class="stat-head"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div></div><div class="stat-val" id="statMessages">—</div><div class="stat-lbl">New Messages</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.75fr 1fr;gap:1.25rem">
+        <div class="card">
+          <div class="card-head"><span class="card-title">Recent Messages</span><button class="btn btn-secondary btn-sm" data-page="messages">View All</button></div>
+          <div class="card-body" id="dashMessages"><div class="empty"><p>Loading…</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Quick Actions</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.625rem">
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Portfolio Project</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Write Blog Post</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Team Member</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="testimonials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Testimonial</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO -->
+    <div class="section-page" id="page-portfolio">
+      <div class="section-header">
+        <div><div class="page-title">Portfolio</div><div class="page-subtitle">Manage case studies and projects</div></div>
+        <button class="btn btn-primary" id="addPortfolioBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Project</button>
+      </div>
+      <div class="card"><div class="card-body" id="portfolioTable"></div></div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="section-page" id="page-blog">
+      <div class="section-header">
+        <div><div class="page-title">Blog Posts</div><div class="page-subtitle">Manage articles and news</div></div>
+        <button class="btn btn-primary" id="addBlogBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Post</button>
+      </div>
+      <div class="card"><div class="card-body" id="blogTable"></div></div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="section-page" id="page-team">
+      <div class="section-header">
+        <div><div class="page-title">Team</div><div class="page-subtitle">Manage team members</div></div>
+        <button class="btn btn-primary" id="addTeamBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Member</button>
+      </div>
+      <div class="card"><div class="card-body" id="teamTable"></div></div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="section-page" id="page-testimonials">
+      <div class="section-header">
+        <div><div class="page-title">Testimonials</div><div class="page-subtitle">Client reviews and quotes</div></div>
+        <button class="btn btn-primary" id="addTestimonialBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Testimonial</button>
+      </div>
+      <div class="card"><div class="card-body" id="testimonialsTable"></div></div>
+    </div>
+
+    <!-- SERVICES -->
+    <div class="section-page" id="page-services">
+      <div class="section-header">
+        <div><div class="page-title">Services</div><div class="page-subtitle">Manage service offerings</div></div>
+        <button class="btn btn-primary" id="addServiceBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Service</button>
+      </div>
+      <div class="card"><div class="card-body" id="servicesTable"></div></div>
+    </div>
+
+    <!-- MESSAGES -->
+    <div class="section-page" id="page-messages">
+      <div class="section-header">
+        <div><div class="page-title">Messages</div><div class="page-subtitle">Contact form submissions</div></div>
+        <button class="btn btn-secondary" id="markAllReadBtn">Mark All Read</button>
+      </div>
+      <div class="card"><div class="card-body" id="messagesList"></div></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="section-page" id="page-settings">
+      <div class="page-title" style="margin-bottom:1.5rem">Settings</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+        <div class="card">
+          <div class="card-head"><span class="card-title">Site Settings</span></div>
+          <div class="card-body">
+            <form id="siteSettingsForm">
+              <div class="f-field"><label>Site Name</label><input type="text" name="site_name" value="engineersTech" /></div>
+              <div class="f-field"><label>Tagline</label><input type="text" name="tagline" value="#drivenByEngineers" /></div>
+              <div class="f-field"><label>Contact Email</label><input type="email" name="contact_email" value="info@engineerstechbd.com" /></div>
+              <div class="f-field"><label>Phone</label><input type="text" name="phone" value="+88 01314 44 33 11" /></div>
+              <button type="submit" class="btn btn-primary">Save Settings</button>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Preferences</span></div>
+          <div class="card-body">
+            <div class="setting-row"><div class="setting-info"><h4>Email Notifications</h4><p>New contact form submissions</p></div><div class="toggle on" data-key="email_notif"></div></div>
+            <div class="setting-row"><div class="setting-info"><h4>Maintenance Mode</h4><p>Show maintenance page to visitors</p></div><div class="toggle" data-key="maintenance"></div></div>
+            <div class="setting-row"><div class="setting-info"><h4>Blog Comments</h4><p>Allow comments on blog posts</p></div><div class="toggle on" data-key="comments"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:1.25rem">
+        <div class="card-head"><span class="card-title">Change Password</span></div>
+        <div class="card-body">
+          <form id="pwForm" style="max-width:420px">
+            <div class="f-field"><label>Current Password</label><input type="password" name="current_password" /></div>
+            <div class="f-field"><label>New Password</label><input type="password" name="new_password" /></div>
+            <div class="f-field"><label>Confirm New Password</label><input type="password" name="confirm_password" /></div>
+            <button type="submit" class="btn btn-primary">Update Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script type="module">
+import ET from './assets/api.js';
+
+/* ═══ UTILS ═══ */
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
+function fmt(d){ return d ? new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—' }
+
+/* TOAST */
+function toast(msg, type='info'){
+  const el = document.createElement('div');
+  const icons = {
+    success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>',
+    error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+    info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  };
+  el.className = `toast ${type}`;
+  el.innerHTML = (icons[type]||'') + `<span>${esc(msg)}</span>`;
+  $('toastWrap').appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 3800);
+}
+
+/* MODAL */
+let _onConfirm = null;
+function openModal(title, bodyHTML, onConfirm, confirmLabel='Save', danger=false){
+  $('modalTitle').textContent = title;
+  $('modalBody').innerHTML = bodyHTML;
+  $('modalConfirm').textContent = confirmLabel;
+  $('modalConfirm').className = danger ? 'btn btn-danger' : 'btn btn-primary';
+  _onConfirm = onConfirm;
+  $('modalOverlay').classList.add('show');
+  $('modalOverlay').querySelector('input, textarea, select') &&
+    $('modalOverlay').querySelector('input, textarea, select').focus();
+}
+function closeModal(){ $('modalOverlay').classList.remove('show'); _onConfirm=null; }
+$('modalClose').onclick = closeModal;
+$('modalCancel').onclick = closeModal;
+$('modalOverlay').addEventListener('click', e=>{ if(e.target===$('modalOverlay')) closeModal(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+$('modalConfirm').addEventListener('click', ()=>{ if(_onConfirm) _onConfirm(); });
+
+function confirmDel(name, onOk){
+  openModal('Confirm Delete',
+    `<p style="color:hsl(var(--muted))">Delete <strong style="color:hsl(var(--fg))">${esc(name)}</strong>? This cannot be undone.</p>`,
+    onOk, 'Delete', true);
+}
+
+/* TABLE */
+function renderTable(el, rows, cols, onEdit, onDel){
+  if(!rows||!rows.length){ el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg><h3>No records yet</h3><p>Click "Add" to get started.</p></div>`; return; }
+  const ths = cols.map(c=>`<th>${c.label}</th>`).join('') + '<th style="width:90px">Actions</th>';
+  const trs = rows.map(row=>{
+    const tds = cols.map(c=>`<td>${c.render ? c.render(row[c.key],row) : esc(row[c.key]??'—')}</td>`).join('');
+    return `<tr>${tds}<td><div style="display:flex;gap:.375rem">
+      <button class="btn btn-secondary btn-sm" data-edit="${esc(row.id)}" title="Edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      </button>
+      <button class="btn btn-danger btn-sm" data-del="${esc(row.id)}" title="Delete">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </button>
+    </div></td></tr>`;
+  }).join('');
+  el.innerHTML = `<div class="tbl-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+  el.querySelectorAll('[data-edit]').forEach(b=>{ b.onclick=()=>{ const r=rows.find(x=>String(x.id)===b.dataset.edit); if(r) onEdit(r); }; });
+  el.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ const r=rows.find(x=>String(x.id)===b.dataset.del); if(r) onDel(r); }; });
+}
+
+/* FORM VALUES */
+function fVals(formEl){ const d={}; new FormData(formEl).forEach((v,k)=>d[k]=v); return d; }
+function fFill(formEl,data){ Object.entries(data).forEach(([k,v])=>{ const e=formEl.elements[k]; if(e) e.value=v??''; }); }
+function fHTML(fields, data={}){
+  return fields.map(f=>{
+    const v = data[f.name]??'';
+    let inp;
+    if(f.type==='textarea'){
+      inp=`<textarea name="${f.name}" rows="4" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;resize:vertical;outline:none" ${f.required?'required':''}>${esc(v)}</textarea>`;
+    } else if(f.type==='select'){
+      const opts=f.options.map(o=>`<option value="${esc(o.value)}" ${v==o.value?'selected':''}>${esc(o.label)}</option>`).join('');
+      inp=`<select name="${f.name}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''}><option value="">— Select —</option>${opts}</select>`;
+    } else {
+      inp=`<input type="${f.type||'text'}" name="${f.name}" value="${esc(v)}" placeholder="${esc(f.placeholder||f.label)}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''} />`;
+    }
+    return `<div class="f-field"><label>${esc(f.label)}${f.required?' <span style="color:hsl(var(--destructive))">*</span>':''}</label>${inp}</div>`;
+  }).join('');
+}
+
+/* CRUD SECTION BUILDER */
+function crudSection({ resource, addBtnId, tableId, fields, cols, nameKey='title' }){
+  let rows=[];
+  async function load(){
+    const el=$( tableId);
+    el.innerHTML='<div class="empty"><p>Loading…</p></div>';
+    try{ rows=await ET.adminGet(resource); if(!Array.isArray(rows)) rows=rows.data||[]; }
+    catch(e){ rows=[]; }
+    renderTable(el, rows, cols,
+      row=>showForm(row),
+      row=>confirmDel(row[nameKey]||row.name||row.id, async()=>{
+        try{ await ET.adminDel(resource,row.id); toast('Deleted','success'); closeModal(); await load(); }
+        catch(e){ toast(e.message||'Delete failed','error'); }
+      })
+    );
+  }
+  function showForm(row=null){
+    const isEdit=!!row;
+    openModal(
+      isEdit?`Edit ${resource}`:`Add ${resource}`,
+      `<form id="crudForm">${fHTML(fields,row||{})}</form>`,
+      async()=>{
+        const form=$('crudForm');
+        if(!form.checkValidity()){ form.reportValidity(); return; }
+        const data=fVals(form);
+        $('modalConfirm').disabled=true; $('modalConfirm').textContent='Saving…';
+        try{
+          if(isEdit) await ET.adminPut(resource,row.id,data);
+          else await ET.adminPost(resource,data);
+          toast(isEdit?'Updated successfully':'Created successfully','success');
+          closeModal(); await load();
+        }catch(e){ toast(e.message||'Save failed','error'); $('modalConfirm').disabled=false; $('modalConfirm').textContent='Save'; }
+      }
+    );
+  }
+  $(addBtnId).addEventListener('click',()=>showForm());
+  return load;
+}
+
+/* ═══ SECTION DEFINITIONS ═══ */
+
+const loadPortfolio = crudSection({
+  resource:'portfolio', addBtnId:'addPortfolioBtn', tableId:'portfolioTable', nameKey:'title',
+  fields:[
+    {name:'title',label:'Project Title',required:true},
+    {name:'industry',label:'Industry',type:'select',required:true,options:[
+      {value:'Web App',label:'Web App'},{value:'Mobile App',label:'Mobile App'},
+      {value:'SaaS',label:'SaaS'},{value:'ERP/CRM',label:'ERP/CRM'},{value:'Design',label:'Design'}]},
+    {name:'client',label:'Client'},
+    {name:'platform',label:'Platform (e.g. Web + Mobile)'},
+    {name:'tagline',label:'One-line tagline',required:true},
+    {name:'status',label:'Status',type:'select',options:[{value:'Live',label:'Live'},{value:'Delivered',label:'Delivered'},{value:'In Progress',label:'In Progress'}]},
+    {name:'techStack',label:'Tech Stack (comma-separated)'},
+    {name:'link',label:'Live URL',type:'url'},
+    {name:'coverImage',label:'Cover Image URL',type:'url'},
+    {name:'slug',label:'URL Slug (e.g. glowup-saas)',placeholder:'auto-generated if blank'},
+    {name:'seo_description',label:'SEO Description (max 320 chars)',type:'textarea'},
+  ],
+  cols:[
+    {key:'title',label:'Project'},
+    {key:'industry',label:'Industry'},
+    {key:'client',label:'Client'},
+    {key:'status',label:'Status',render:v=>`<span class="badge badge-${(v||'').toLowerCase()}">${esc(v||'—')}</span>`},
+    {key:'slug',label:'Slug'},
+  ]
+});
+
+const loadBlog = crudSection({
+  resource:'blog', addBtnId:'addBlogBtn', tableId:'blogTable', nameKey:'title',
+  fields:[
+    {name:'title',label:'Title',required:true},
+    {name:'slug',label:'Slug (URL-friendly)'},
+    {name:'excerpt',label:'Excerpt',type:'textarea'},
+    {name:'author',label:'Author'},
+    {name:'category',label:'Category'},
+    {name:'status',label:'Status',type:'select',options:[{value:'published',label:'Published'},{value:'draft',label:'Draft'}]},
+    {name:'cover_image',label:'Cover Image URL',type:'url'},
+  ],
+  cols:[
+    {key:'title',label:'Title'},
+    {key:'author',label:'Author'},
+    {key:'category',label:'Category'},
+    {key:'status',label:'Status',render:v=>`<span class="badge badge-${esc(v||'draft')}">${esc(v||'draft')}</span>`},
+    {key:'created_at',label:'Date',render:v=>fmt(v)},
+  ]
+});
+
+const loadTeam = crudSection({
+  resource:'team', addBtnId:'addTeamBtn', tableId:'teamTable', nameKey:'name',
+  fields:[
+    {name:'name',label:'Full Name',required:true},
+    {name:'role',label:'Role / Title',required:true},
+    {name:'bio',label:'Short Bio',type:'textarea'},
+    {name:'photo',label:'Photo URL',type:'url'},
+    {name:'linkedin',label:'LinkedIn URL',type:'url'},
+    {name:'order',label:'Display Order',type:'number'},
+  ],
+  cols:[
+    {key:'name',label:'Name'},
+    {key:'role',label:'Role'},
+  ]
+});
+
+const loadTestimonials = crudSection({
+  resource:'testimonials', addBtnId:'addTestimonialBtn', tableId:'testimonialsTable', nameKey:'name',
+  fields:[
+    {name:'name',label:'Client Name',required:true},
+    {name:'company',label:'Company'},
+    {name:'role',label:'Role / Title'},
+    {name:'quote',label:'Testimonial Quote',type:'textarea',required:true},
+    {name:'rating',label:'Rating (1–5)',type:'number'},
+    {name:'photo',label:'Photo URL',type:'url'},
+  ],
+  cols:[
+    {key:'name',label:'Client'},
+    {key:'company',label:'Company'},
+    {key:'rating',label:'Rating',render:v=>v?'★'.repeat(Math.min(5,+v)):'-'},
+    {key:'quote',label:'Quote',render:v=>esc((v||'').substring(0,60))+'…'},
+  ]
+});
+
+const loadServices = crudSection({
+  resource:'services', addBtnId:'addServiceBtn', tableId:'servicesTable', nameKey:'title',
+  fields:[
+    {name:'title',label:'Service Title',required:true},
+    {name:'description',label:'Description',type:'textarea',required:true},
+    {name:'icon',label:'Icon (SVG path or emoji)'},
+    {name:'order',label:'Display Order',type:'number'},
+  ],
+  cols:[
+    {key:'title',label:'Service'},
+    {key:'description',label:'Description',render:v=>esc((v||'').substring(0,70))+'…'},
+  ]
+});
+
+/* ═══ MESSAGES ═══ */
+async function loadMessages(){
+  const el=$('messagesList'), dashEl=$('dashMessages');
+  try{
+    const msgs = await ET.adminGet('messages');
+    const rows = Array.isArray(msgs) ? msgs : msgs.data||[];
+    const unread = rows.filter(m=>!m.read_at).length;
+    const badge=$('msgBadge');
+    if(unread){ badge.textContent=unread; badge.style.display=''; }
+    else badge.style.display='none';
+    $('statMessages').textContent = unread;
+    // Dashboard preview
+    dashEl.innerHTML = rows.slice(0,5).map(m=>`
+      <div class="activity-item" style="margin-bottom:.75rem">
+        <div class="act-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="act-body"><div class="act-title">${esc(m.name||m.email||'—')}</div><div class="act-desc">${esc((m.subject||m.message||'').substring(0,60))}</div></div>
+        <div class="act-time">${fmt(m.created_at)}</div>
+      </div>`).join('') || '<div class="empty"><p>No messages yet.</p></div>';
+    // Full list
+    if(!rows.length){ el.innerHTML='<div class="empty"><p>No messages yet.</p></div>'; return; }
+    el.innerHTML = `<div class="msg-list">${rows.map(m=>`
+      <div class="msg-item ${m.read_at?'':'unread'}" data-msgid="${esc(m.id)}">
+        <div class="msg-head"><span class="msg-name">${esc(m.name||'Anonymous')}</span><span class="msg-time">${fmt(m.created_at)}</span></div>
+        <div class="msg-subject">${esc(m.subject||'(no subject)')}</div>
+        <div class="msg-preview">${esc(m.email||'')} — ${esc((m.message||'').substring(0,80))}</div>
+      </div>`).join('')}</div>`;
+    el.querySelectorAll('.msg-item').forEach(item=>{
+      item.addEventListener('click',()=>{
+        const msg=rows.find(r=>String(r.id)===item.dataset.msgid);
+        if(!msg) return;
+        openModal(`Message from ${msg.name||'Anonymous'}`,
+          `<div style="display:flex;flex-direction:column;gap:.875rem">
+            <div><strong>From:</strong> ${esc(msg.name||'')} &lt;${esc(msg.email||'')}&gt;</div>
+            ${msg.phone?`<div><strong>Phone:</strong> ${esc(msg.phone)}</div>`:''}
+            <div><strong>Subject:</strong> ${esc(msg.subject||'')}</div>
+            <hr style="border-color:hsl(var(--border))"/>
+            <div style="white-space:pre-wrap;color:hsl(var(--muted))">${esc(msg.message||'')}</div>
+            <div><strong>Received:</strong> ${fmt(msg.created_at)}</div>
+          </div>`,
+          async()=>{ /* reply via mailto */
+            window.open(`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject||'')}`, '_blank');
+            if(!msg.read_at){
+              try{ await ET.adminPatch('messages', msg.id, {read_at: new Date().toISOString()}); await loadMessages(); }catch{}
+            }
+            closeModal();
+          }, 'Reply via Email'
+        );
+        if(!msg.read_at){
+          ET.adminPatch('messages',msg.id,{read_at:new Date().toISOString()}).then(loadMessages).catch(()=>{});
+        }
+      });
+    });
+  }catch(e){ el.innerHTML=`<div class="empty"><p>Failed to load messages.</p></div>`; }
+}
+
+/* ═══ DASHBOARD STATS ═══ */
+async function loadDashStats(){
+  try{
+    const s = await ET.stats();
+    $('statPortfolio').textContent = s.portfolio ?? '—';
+    $('statTeam').textContent = s.team ?? '—';
+    $('statBlog').textContent = s.blog ?? '—';
+    $('statMessages').textContent = s.unread_messages ?? '—';
+  }catch{
+    // fall through — individual section counts will fill in
+  }
+}
+
+/* ═══ PAGE ROUTER ═══ */
+const pageMeta = {
+  dashboard:    { title:'Dashboard',    subtitle:'Overview of your site' },
+  portfolio:    { title:'Portfolio',    subtitle:'Manage case studies and projects' },
+  blog:         { title:'Blog Posts',   subtitle:'Manage articles and news' },
+  team:         { title:'Team',         subtitle:'Manage team members' },
+  testimonials: { title:'Testimonials', subtitle:'Client reviews and quotes' },
+  services:     { title:'Services',     subtitle:'Manage service offerings' },
+  messages:     { title:'Messages',     subtitle:'Contact form submissions' },
+  settings:     { title:'Settings',     subtitle:'System configuration' },
+};
+const sectionLoaders = { portfolio:loadPortfolio, blog:loadBlog, team:loadTeam, testimonials:loadTestimonials, services:loadServices, messages:loadMessages };
+let currentPage = 'dashboard';
+
+function navigateTo(page){
+  if(!pageMeta[page]) return;
+  document.querySelectorAll('.section-page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.toggle('active', l.dataset.page===page));
+  $(`page-${page}`)?.classList.add('active');
+  const meta=pageMeta[page];
+  $('pageTitle').textContent = meta.title;
+  $('pageSubtitle').textContent = meta.subtitle;
+  currentPage = page;
+  if(sectionLoaders[page]) sectionLoaders[page]();
+  if(page==='dashboard'){ loadDashStats(); loadMessages(); }
+  // close mobile sidebar
+  $('sidebar').classList.remove('open');
+  $('sidebarOverlay').classList.remove('show');
+}
+
+document.querySelectorAll('[data-page]').forEach(el=>{
+  el.addEventListener('click',()=>navigateTo(el.dataset.page));
+});
+
+/* ═══ SETTINGS ═══ */
+$('siteSettingsForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  try{ await ET.adminPost('settings', fVals(e.target)); toast('Settings saved','success'); }
+  catch(err){ toast(err.message||'Save failed','error'); }
+});
+$('pwForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const d=fVals(e.target);
+  if(d.new_password !== d.confirm_password){ toast('Passwords do not match','error'); return; }
+  try{ await ET.adminPost('auth/change-password', d); toast('Password updated','success'); e.target.reset(); }
+  catch(err){ toast(err.message||'Failed','error'); }
+});
+document.querySelectorAll('.toggle').forEach(t=>{
+  t.addEventListener('click',()=>{ t.classList.toggle('on'); });
+});
+$('markAllReadBtn')?.addEventListener('click', async()=>{
+  try{ await ET.adminPost('messages/mark-all-read',{}); toast('All marked as read','success'); loadMessages(); }
+  catch(e){ toast(e.message,'error'); }
+});
+
+/* ═══ AUTH ═══ */
+$('pwToggle').addEventListener('click',()=>{
+  const inp=$('loginPassword'), open=$('eyeOpen'), closed=$('eyeClosed');
+  const show = inp.type==='password';
+  inp.type = show?'text':'password';
+  open.style.display = show?'none':'';
+  closed.style.display = show?'':'none';
+});
+
+$('loginForm').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const btn=$('loginBtn'), err=$('loginError');
+  err.classList.remove('show');
+  btn.disabled=true; btn.textContent='Signing in…';
+  try{
+    const res = await ET.login($('loginEmail').value.trim(), $('loginPassword').value);
+    ET.setToken(res.token || res.access_token);
+    if($('rememberMe').checked) localStorage.setItem('et_email', $('loginEmail').value.trim());
+    bootApp(res.user || { email: $('loginEmail').value.trim() });
+  }catch{
+    err.classList.add('show');
+    btn.disabled=false; btn.textContent='Sign In';
+  }
+});
+
+$('logoutBtn').addEventListener('click', async()=>{
+  try{ await ET.logout(); }catch{}
+  ET.clearToken();
+  $('appView').classList.remove('active');
+  $('loginView').style.display='';
+});
+
+function bootApp(user){
+  $('loginView').style.display='none';
+  $('appView').classList.add('active');
+  const email = user?.email || 'admin';
+  $('userEmail').textContent = email.split('@')[0];
+  $('userInitial').textContent = email[0].toUpperCase();
+  navigateTo('dashboard');
+}
+
+/* Mobile sidebar */
+$('mobMenuBtn').addEventListener('click',()=>{
+  $('sidebar').classList.toggle('open');
+  $('sidebarOverlay').classList.toggle('show');
+});
+$('sidebarOverlay').addEventListener('click',()=>{
+  $('sidebar').classList.remove('open');
+  $('sidebarOverlay').classList.remove('show');
+});
+
+/* Responsive: show mob btn */
+function checkMob(){ $('mobMenuBtn').style.display = window.innerWidth<769 ? 'flex' : 'none'; }
+checkMob(); window.addEventListener('resize',checkMob);
+
+/* Auto-login if token exists */
+(async()=>{
+  const savedEmail = localStorage.getItem('et_email');
+  if(savedEmail) $('loginEmail').value = savedEmail;
+  if(ET.isLoggedIn()){
+    try{
+      const user = await ET.get('/auth/me', true);
+      bootApp(user);
+    }catch{ ET.clearToken(); }
+  }
+})();
+</script>
+</body>
+</html>

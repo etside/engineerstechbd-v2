@@ -1,0 +1,60 @@
+# engineersTech — AI/LLM Context File
+# https://engineerstechbd.com/llms.txt
+
+## Company
+engineersTech is a registered software development company based in Dhaka, Bangladesh (Reg: TRAD/DNCC/025495/2025, TIN: 459909954808, BIN: 004562167-0201, BASIS Member, e-CAB Member).
+Founded: 2017 (started on Upwork). Website: https://engineerstechbd.com
+Compliance: Bangladesh Cyber Security Act 2023, GDPR, Digital Security Act 2018.
+
+## What We Do
+We build enterprise-grade software solutions: custom ERP, CRM, HRM, SaaS platforms, web applications, mobile apps (Android & iOS), UI/UX design, and AI-integrated solutions. We are known for high-quality engineering at affordable pricing through AI-driven development workflows.
+
+## Services
+- Enterprise & SaaS Solutions (CRM, HRM, ERP, inventory, custom platforms)
+- Web & Mobile Applications (React Native, Flutter, Next.js, React, Laravel)
+- UI/UX, Graphics & Motion Design (Figma, After Effects, Framer)
+- Technical Consulting & Product Strategy
+
+## Products (Live)
+- GlowUp: Beauty & wellness SaaS platform. URL: https://glowupbd.app
+- Restaurant POS: Complete restaurant management system
+- Tour Booking: Travel & tourism platform
+- HRM System: Human resource management
+- Hotel Booking: Property management system
+- Staff Tracking: Field force management with GPS
+
+## Key Stats
+- 8+ years experience
+- 150+ projects delivered
+- 98% on-time delivery
+- 50+ clients across USA, Canada, UK, Australia, Bangladesh, and more
+
+## Notable Clients
+SharkNinja, Avive, Aline HRMS, Kitchn.io, Ample (Canada), EasyAsset, Best Western, Intertek Bangladesh, Industry Search, Jodel, Chamak, Khola Bazaar, Urmi Group, Prolific eLearning, SEO Partners, Brisbane Town Planning, Trust Formation, ConeScan, TopGrain, e-Fab, CCECC, Bank Asia
+
+## Team
+- Nazmul Alom Sakib — Founder & CEO
+- Al Shahriar — Co-founder & COO
+- Sheikh Md. Junaeid — Co-Founder & CMO
+
+## Contact
+Email: info@engineerstechbd.com
+Phone: +88 01314 44 33 11
+WhatsApp: +880 1873 722228
+Address: Rashi International, Level 6, Flat B6, Plot 9, Road 4, Sector 16/A, Uttara, Dhaka 1230, Bangladesh
+
+## Pages
+- Home: https://engineerstechbd.com/
+- Services: https://engineerstechbd.com/services.html
+- Products: https://engineerstechbd.com/products.html
+- Portfolio: https://engineerstechbd.com/portfolio.html
+- About: https://engineerstechbd.com/about.html
+- Team: https://engineerstechbd.com/team.html
+- Career: https://engineerstechbd.com/career.html
+- Testimonials: https://engineerstechbd.com/testimonials.html
+- Blog: https://engineerstechbd.com/blog.html
+- FAQ: https://engineerstechbd.com/faq.html
+- Contact: https://engineerstechbd.com/contact.html
+- Privacy Policy: https://engineerstechbd.com/privacy-policy.html
+- Terms & Conditions: https://engineerstechbd.com/terms.html
+- Data Protection Policy: https://engineerstechbd.com/data-protection-policy.html

@@ -1,0 +1,33 @@
+# Dependencies
+backend/node_modules/
+backend/vendor/
+mcp-server/node_modules/
+node_modules/
+
+# Environment files
+backend/.env
+backend/.env.local
+backend/.env.production
+backend/.env.production.bak
+backend/.env.staging
+
+# Database
+backend/database/*.sqlite
+
+# Build output
+mcp-server/dist/
+backend/public/build/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cache
+backend/bootstrap/cache/*.php
