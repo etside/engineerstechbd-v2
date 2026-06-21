@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Admin CMS — engineersTech</title>
 <meta name="robots" content="noindex, nofollow" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -50,7 +48,7 @@ button{cursor:pointer;font-family:inherit}
 .login-error.show{display:block}
 .login-foot{text-align:center;margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid hsl(var(--border));font-size:.75rem;color:hsl(var(--muted))}
 
-/* LAYOUT */
+/* APP LAYOUT */
 .app{display:none;min-height:100vh}.app.active{display:block}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:256px;background:hsl(var(--card));border-right:1px solid hsl(var(--border));padding:1.25rem;z-index:100;overflow-y:auto;transition:transform .3s;display:flex;flex-direction:column}
 .sb-logo{display:flex;align-items:center;gap:.75rem;margin-bottom:1.75rem;padding-bottom:1.25rem;border-bottom:1px solid hsl(var(--border))}
@@ -86,33 +84,34 @@ button{cursor:pointer;font-family:inherit}
 .section-page{display:none}.section-page.active{display:block}
 .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
 
-/* STATS GRID */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.75rem}
-.stat-card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:1.375rem;transition:all .25s}
-.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.25)}
-.stat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
-.stat-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.75rem}
+.stat-card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);padding:1.25rem}
+.stat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:.875rem}
 .stat-icon svg{width:20px;height:20px}
 .stat-icon.blue{background:hsl(214 100% 50%/.12);color:hsl(214 100% 55%)}
 .stat-icon.green{background:hsl(var(--success)/.12);color:hsl(var(--success))}
 .stat-icon.purple{background:hsl(var(--purple)/.12);color:hsl(var(--purple))}
 .stat-icon.orange{background:hsl(var(--warning)/.12);color:hsl(var(--warning))}
-.stat-val{font-size:1.875rem;font-weight:700;line-height:1}
+.stat-icon.red{background:hsl(var(--destructive)/.12);color:hsl(var(--destructive))}
+.stat-icon.teal{background:rgba(20,184,166,.12);color:rgb(20,184,166)}
+.stat-val{font-size:1.75rem;font-weight:700;line-height:1}
 .stat-lbl{font-size:.75rem;color:hsl(var(--muted));margin-top:.25rem}
 
 /* CARD */
-.card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);overflow:hidden}
-.card-head{display:flex;align-items:center;justify-content:space-between;padding:1.125rem 1.375rem;border-bottom:1px solid hsl(var(--border))}
+.card{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);overflow:hidden;margin-bottom:1.25rem}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid hsl(var(--border))}
 .card-title{font-size:.9375rem;font-weight:600}
-.card-body{padding:1.375rem}
+.card-body{padding:1.25rem}
 
 /* TABLE */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:.8125rem 1rem;border-bottom:1px solid hsl(var(--border))}
+th,td{text-align:left;padding:.75rem 1rem;border-bottom:1px solid hsl(var(--border))}
 th{font-size:.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:hsl(var(--muted));background:hsl(var(--secondary))}
 td{font-size:.8125rem;vertical-align:middle}
 tbody tr:hover td{background:hsl(var(--secondary)/.4)}
+.tbl-thumb{width:42px;height:42px;border-radius:6px;object-fit:cover;background:hsl(var(--secondary));display:block}
 
 /* BADGES */
 .badge{display:inline-block;padding:.2rem .625rem;border-radius:9999px;font-size:.6875rem;font-weight:600}
@@ -120,6 +119,8 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
 .badge-draft,.badge-inactive{background:hsl(var(--muted)/.15);color:hsl(var(--muted))}
 .badge-pending{background:hsl(var(--warning)/.12);color:hsl(var(--warning))}
 .badge-delivered{background:hsl(var(--purple)/.12);color:hsl(var(--purple))}
+.badge-open{background:hsl(214 100% 50%/.12);color:hsl(214 100% 65%)}
+.badge-closed{background:hsl(var(--muted)/.15);color:hsl(var(--muted))}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5625rem 1.125rem;border-radius:8px;font-size:.8125rem;font-weight:500;font-family:inherit;transition:all .2s;border:none;cursor:pointer}
@@ -136,7 +137,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.show{display:flex}
-.modal{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);width:100%;max-width:580px;max-height:90vh;overflow-y:auto;animation:modal-in .25s ease}
+.modal{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:var(--radius);width:100%;max-width:620px;max-height:90vh;overflow-y:auto;animation:modal-in .25s ease}
 @keyframes modal-in{from{transform:translateY(16px) scale(.97);opacity:0}to{transform:none;opacity:1}}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:1.125rem 1.375rem;border-bottom:1px solid hsl(var(--border))}
 .modal-title{font-size:1rem;font-weight:600}
@@ -146,15 +147,30 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
 .modal-body{padding:1.375rem}
 .modal-foot{display:flex;justify-content:flex-end;gap:.75rem;padding:1rem 1.375rem;border-top:1px solid hsl(var(--border))}
 
-/* FORM */
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-.f-row.full{grid-template-columns:1fr}
+/* FORM FIELDS */
 .f-field{margin-bottom:1rem}
 .f-field label{display:block;font-size:.8125rem;font-weight:500;margin-bottom:.375rem}
 .f-field input,.f-field select,.f-field textarea{width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none;transition:border .2s}
 .f-field input:focus,.f-field select:focus,.f-field textarea:focus{border-color:hsl(var(--primary))}
-.f-field textarea{resize:vertical;min-height:88px}
+.f-field textarea{resize:vertical;min-height:80px}
 .f-field select option{background:hsl(var(--card))}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* IMAGE UPLOAD WIDGET */
+.img-upload{display:flex;flex-direction:column;gap:.625rem}
+.img-preview{width:100%;height:140px;border-radius:8px;background:hsl(var(--secondary));border:2px dashed hsl(var(--border));display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;cursor:pointer;transition:border-color .2s}
+.img-preview:hover{border-color:hsl(var(--primary))}
+.img-preview img{width:100%;height:100%;object-fit:cover;display:none}
+.img-preview img.loaded{display:block}
+.img-preview .img-placeholder{display:flex;flex-direction:column;align-items:center;gap:.5rem;color:hsl(var(--muted))}
+.img-preview .img-placeholder svg{width:32px;height:32px}
+.img-preview .img-placeholder span{font-size:.75rem}
+.img-preview .img-placeholder.hidden{display:none}
+.img-upload-row{display:flex;gap:.5rem;align-items:center}
+.img-upload-row input[type=file]{display:none}
+.img-url-input{flex:1;padding:.5rem .75rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.75rem;font-family:inherit;outline:none}
+.img-url-input:focus{border-color:hsl(var(--primary))}
+.img-upload-btn{white-space:nowrap}
 
 /* TOAST */
 .toast-wrap{position:fixed;top:1.25rem;right:1.25rem;z-index:400;display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
@@ -165,25 +181,28 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
 .toast.info{border-left:3px solid hsl(214 100% 55%);color:hsl(214 100% 70%)}
 @keyframes t-in{from{transform:translateX(20px);opacity:0}to{transform:none;opacity:1}}
 
-/* EMPTY STATE */
+/* EMPTY */
 .empty{text-align:center;padding:3rem 1.5rem;color:hsl(var(--muted))}
-.empty svg{width:52px;height:52px;margin:0 auto 1rem;opacity:.25}
+.empty svg{width:48px;height:48px;margin:0 auto 1rem;opacity:.2}
 .empty h3{font-size:.9375rem;font-weight:600;color:hsl(var(--fg));margin-bottom:.375rem}
 .empty p{font-size:.8125rem}
 
-/* ACTIVITY */
-.activity-list{display:flex;flex-direction:column;gap:.875rem}
-.activity-item{display:flex;gap:.875rem;padding:.875rem;background:hsl(var(--secondary));border-radius:8px}
-.act-icon{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.act-icon svg{width:15px;height:15px}
-.act-icon.blue{background:hsl(214 100% 50%/.15);color:hsl(214 100% 60%)}
-.act-icon.green{background:hsl(var(--success)/.15);color:hsl(var(--success))}
-.act-icon.purple{background:hsl(var(--purple)/.15);color:hsl(var(--purple))}
-.act-icon.orange{background:hsl(var(--warning)/.15);color:hsl(var(--warning))}
-.act-body{flex:1}
-.act-title{font-size:.8125rem;font-weight:500;margin-bottom:.125rem}
-.act-desc{font-size:.75rem;color:hsl(var(--muted))}
-.act-time{font-size:.6875rem;color:hsl(var(--muted));white-space:nowrap}
+/* MESSAGES */
+.msg-list{display:flex;flex-direction:column;gap:.625rem}
+.msg-item{padding:1rem 1.25rem;background:hsl(var(--secondary));border-radius:8px;border-left:3px solid hsl(var(--border));cursor:pointer;transition:all .2s}
+.msg-item.unread{border-left-color:hsl(var(--primary))}
+.msg-item:hover{background:hsl(var(--secondary)/.7)}
+.msg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem}
+.msg-name{font-size:.875rem;font-weight:600}
+.msg-time{font-size:.6875rem;color:hsl(var(--muted))}
+.msg-subject{font-size:.8125rem;font-weight:500;margin-bottom:.2rem}
+.msg-preview{font-size:.75rem;color:hsl(var(--muted));overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* PAGES EDITOR */
+.page-editor-tabs{display:flex;gap:.25rem;border-bottom:1px solid hsl(var(--border));margin-bottom:1.5rem;overflow-x:auto}
+.pet{padding:.625rem 1rem;border:none;background:none;color:hsl(var(--muted));font-size:.875rem;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;font-family:inherit}
+.pet.active{color:hsl(var(--primary));border-bottom-color:hsl(var(--primary))}
+.pet-panel{display:none}.pet-panel.active{display:block}
 
 /* SETTINGS */
 .setting-row{display:flex;align-items:center;justify-content:space-between;padding:.875rem 0;border-bottom:1px solid hsl(var(--border)/.5)}
@@ -195,36 +214,24 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
 .toggle::after{content:'';position:absolute;top:2px;left:2px;width:17px;height:17px;background:#fff;border-radius:50%;transition:transform .2s}
 .toggle.on::after{transform:translateX(19px)}
 
-/* MESSAGES */
-.msg-list{display:flex;flex-direction:column;gap:.75rem}
-.msg-item{padding:1rem 1.25rem;background:hsl(var(--secondary));border-radius:8px;border-left:3px solid hsl(var(--border));cursor:pointer;transition:all .2s}
-.msg-item.unread{border-left-color:hsl(var(--primary))}
-.msg-item:hover{background:hsl(var(--secondary)/.7)}
-.msg-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem}
-.msg-name{font-size:.875rem;font-weight:600}
-.msg-time{font-size:.6875rem;color:hsl(var(--muted))}
-.msg-subject{font-size:.8125rem;font-weight:500;margin-bottom:.25rem}
-.msg-preview{font-size:.75rem;color:hsl(var(--muted));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
 /* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
   .main{margin-left:0}
   .mob-menu-btn{display:flex !important}
   .f-row{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
 <body>
-
-<!-- TOAST CONTAINER -->
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="cmsModal">
     <div class="modal-header">
-      <span class="modal-title" id="modalTitle">Title</span>
+      <span class="modal-title" id="modalTitle">Edit</span>
       <button class="modal-close-btn" id="modalClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body" id="modalBody"></div>
@@ -235,14 +242,12 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
   </div>
 </div>
 
-<!-- ═══ LOGIN ═══ -->
+<!-- LOGIN -->
 <div id="loginView">
   <div class="login-wrap">
     <div class="login-card">
       <div class="login-logo">
-        <div class="login-logo-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
+        <div class="login-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
         <h1>engineersTech</h1>
         <p>Admin Dashboard</p>
       </div>
@@ -273,7 +278,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
   </div>
 </div>
 
-<!-- ═══ APP ═══ -->
+<!-- APP -->
 <div class="app" id="appView">
   <div class="overlay" id="sidebarOverlay"></div>
 
@@ -283,101 +288,70 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
       <div class="sb-logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
       <div class="sb-logo-text">engineersTech <span>Admin CMS</span></div>
     </div>
-
     <nav>
       <div class="nav-sec">
         <div class="nav-sec-title">Main</div>
-        <button class="nav-link active" data-page="dashboard">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          Dashboard
-        </button>
-        <button class="nav-link" data-page="messages">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-          Messages
-          <span class="nav-badge" id="msgBadge" style="display:none">0</span>
-        </button>
+        <button class="nav-link active" data-page="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</button>
+        <button class="nav-link" data-page="messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Messages<span class="nav-badge" id="msgBadge" style="display:none">0</span></button>
       </div>
       <div class="nav-sec">
         <div class="nav-sec-title">Content</div>
-        <button class="nav-link" data-page="portfolio">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-          Portfolio
-        </button>
-        <button class="nav-link" data-page="blog">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          Blog Posts
-        </button>
-        <button class="nav-link" data-page="team">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          Team
-        </button>
-        <button class="nav-link" data-page="testimonials">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-          Testimonials
-        </button>
-        <button class="nav-link" data-page="services">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-          Services
-        </button>
+        <button class="nav-link" data-page="portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>Portfolio</button>
+        <button class="nav-link" data-page="blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Blog Posts</button>
+        <button class="nav-link" data-page="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Team</button>
+        <button class="nav-link" data-page="testimonials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Testimonials</button>
+        <button class="nav-link" data-page="services"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>Services</button>
+        <button class="nav-link" data-page="products"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>Products</button>
+        <button class="nav-link" data-page="career"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Career / Jobs</button>
+        <button class="nav-link" data-page="faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>FAQ</button>
       </div>
       <div class="nav-sec">
-        <div class="nav-sec-title">System</div>
-        <button class="nav-link" data-page="settings">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>
-          Settings
-        </button>
+        <div class="nav-sec-title">Site</div>
+        <button class="nav-link" data-page="pages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Page Content</button>
+        <button class="nav-link" data-page="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M19.07 19.07l-1.41-1.41M4.93 19.07l1.41-1.41M12 2v2M12 20v2M2 12h2M20 12h2"/></svg>Settings</button>
       </div>
     </nav>
-
     <div class="sb-bottom">
-      <button class="logout-btn" id="logoutBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-        Sign Out
-      </button>
+      <button class="logout-btn" id="logoutBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Sign Out</button>
     </div>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="main">
-    <!-- Top bar -->
     <div class="topbar">
       <div class="topbar-left">
-        <button class="mob-menu-btn" id="mobMenuBtn" style="display:none">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <div>
-          <div class="page-title" id="pageTitle">Dashboard</div>
-          <div class="page-subtitle" id="pageSubtitle">Overview</div>
-        </div>
+        <button class="mob-menu-btn" id="mobMenuBtn" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+        <div><div class="page-title" id="pageTitle">Dashboard</div><div class="page-subtitle" id="pageSubtitle">Overview</div></div>
       </div>
       <div class="topbar-right">
-        <div class="user-chip">
-          <div class="user-avatar" id="userInitial">A</div>
-          <span id="userEmail">admin</span>
-        </div>
+        <a href="index.html" target="_blank" class="btn btn-secondary btn-sm">View Site</a>
+        <div class="user-chip"><div class="user-avatar" id="userInitial">A</div><span id="userEmail">admin</span></div>
       </div>
     </div>
 
     <!-- DASHBOARD -->
     <div class="section-page active" id="page-dashboard">
       <div class="stats-grid" id="statsGrid">
-        <div class="stat-card"><div class="stat-head"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div></div><div class="stat-val" id="statPortfolio">—</div><div class="stat-lbl">Portfolio Projects</div></div>
-        <div class="stat-card"><div class="stat-head"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div><div class="stat-val" id="statTeam">—</div><div class="stat-lbl">Team Members</div></div>
-        <div class="stat-card"><div class="stat-head"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div></div><div class="stat-val" id="statBlog">—</div><div class="stat-lbl">Blog Posts</div></div>
-        <div class="stat-card"><div class="stat-head"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div></div><div class="stat-val" id="statMessages">—</div><div class="stat-lbl">New Messages</div></div>
+        <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="stat-val" id="statPortfolio">—</div><div class="stat-lbl">Portfolio Projects</div></div>
+        <div class="stat-card"><div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div><div class="stat-val" id="statBlog">—</div><div class="stat-lbl">Blog Posts</div></div>
+        <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="stat-val" id="statTeam">—</div><div class="stat-lbl">Team Members</div></div>
+        <div class="stat-card"><div class="stat-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><div class="stat-val" id="statProducts">—</div><div class="stat-lbl">Products</div></div>
+        <div class="stat-card"><div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></div><div class="stat-val" id="statJobs">—</div><div class="stat-lbl">Open Positions</div></div>
+        <div class="stat-card"><div class="stat-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><div class="stat-val" id="statMessages">—</div><div class="stat-lbl">Unread Messages</div></div>
       </div>
-      <div style="display:grid;grid-template-columns:1.75fr 1fr;gap:1.25rem">
+      <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:1.25rem;flex-wrap:wrap">
         <div class="card">
           <div class="card-head"><span class="card-title">Recent Messages</span><button class="btn btn-secondary btn-sm" data-page="messages">View All</button></div>
           <div class="card-body" id="dashMessages"><div class="empty"><p>Loading…</p></div></div>
         </div>
         <div class="card">
           <div class="card-head"><span class="card-title">Quick Actions</span></div>
-          <div class="card-body" style="display:flex;flex-direction:column;gap:.625rem">
-            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Portfolio Project</button>
-            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Write Blog Post</button>
-            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Team Member</button>
-            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="testimonials"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Testimonial</button>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.5rem">
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="portfolio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Portfolio Project</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="blog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Write Blog Post</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Team Member</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="career"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Post a Job</button>
+            <button class="btn btn-secondary" style="justify-content:flex-start" data-page="pages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit Page Content</button>
           </div>
         </div>
       </div>
@@ -387,7 +361,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
     <div class="section-page" id="page-portfolio">
       <div class="section-header">
         <div><div class="page-title">Portfolio</div><div class="page-subtitle">Manage case studies and projects</div></div>
-        <button class="btn btn-primary" id="addPortfolioBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Project</button>
+        <button class="btn btn-primary" id="addPortfolioBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Project</button>
       </div>
       <div class="card"><div class="card-body" id="portfolioTable"></div></div>
     </div>
@@ -396,7 +370,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
     <div class="section-page" id="page-blog">
       <div class="section-header">
         <div><div class="page-title">Blog Posts</div><div class="page-subtitle">Manage articles and news</div></div>
-        <button class="btn btn-primary" id="addBlogBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Post</button>
+        <button class="btn btn-primary" id="addBlogBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Post</button>
       </div>
       <div class="card"><div class="card-body" id="blogTable"></div></div>
     </div>
@@ -405,7 +379,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
     <div class="section-page" id="page-team">
       <div class="section-header">
         <div><div class="page-title">Team</div><div class="page-subtitle">Manage team members</div></div>
-        <button class="btn btn-primary" id="addTeamBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Member</button>
+        <button class="btn btn-primary" id="addTeamBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Member</button>
       </div>
       <div class="card"><div class="card-body" id="teamTable"></div></div>
     </div>
@@ -413,8 +387,8 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
     <!-- TESTIMONIALS -->
     <div class="section-page" id="page-testimonials">
       <div class="section-header">
-        <div><div class="page-title">Testimonials</div><div class="page-subtitle">Client reviews and quotes</div></div>
-        <button class="btn btn-primary" id="addTestimonialBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Testimonial</button>
+        <div><div class="page-title">Testimonials</div><div class="page-subtitle">Client reviews</div></div>
+        <button class="btn btn-primary" id="addTestimonialBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Testimonial</button>
       </div>
       <div class="card"><div class="card-body" id="testimonialsTable"></div></div>
     </div>
@@ -423,9 +397,36 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
     <div class="section-page" id="page-services">
       <div class="section-header">
         <div><div class="page-title">Services</div><div class="page-subtitle">Manage service offerings</div></div>
-        <button class="btn btn-primary" id="addServiceBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Service</button>
+        <button class="btn btn-primary" id="addServiceBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Service</button>
       </div>
       <div class="card"><div class="card-body" id="servicesTable"></div></div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="section-page" id="page-products">
+      <div class="section-header">
+        <div><div class="page-title">Products</div><div class="page-subtitle">Manage product listings</div></div>
+        <button class="btn btn-primary" id="addProductBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add Product</button>
+      </div>
+      <div class="card"><div class="card-body" id="productsTable"></div></div>
+    </div>
+
+    <!-- CAREER -->
+    <div class="section-page" id="page-career">
+      <div class="section-header">
+        <div><div class="page-title">Career / Jobs</div><div class="page-subtitle">Manage open positions</div></div>
+        <button class="btn btn-primary" id="addCareerBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Post Job</button>
+      </div>
+      <div class="card"><div class="card-body" id="careerTable"></div></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-page" id="page-faq">
+      <div class="section-header">
+        <div><div class="page-title">FAQ</div><div class="page-subtitle">Frequently asked questions</div></div>
+        <button class="btn btn-primary" id="addFaqBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add FAQ</button>
+      </div>
+      <div class="card"><div class="card-body" id="faqTable"></div></div>
     </div>
 
     <!-- MESSAGES -->
@@ -435,6 +436,16 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
         <button class="btn btn-secondary" id="markAllReadBtn">Mark All Read</button>
       </div>
       <div class="card"><div class="card-body" id="messagesList"></div></div>
+    </div>
+
+    <!-- PAGE CONTENT EDITOR -->
+    <div class="section-page" id="page-pages">
+      <div class="section-header">
+        <div><div class="page-title">Page Content</div><div class="page-subtitle">Edit hero text, CTAs, and section content</div></div>
+        <button class="btn btn-primary" id="savePageContentBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save All</button>
+      </div>
+      <div class="page-editor-tabs" id="pageTabs"></div>
+      <div id="pagePanels"></div>
     </div>
 
     <!-- SETTINGS -->
@@ -462,7 +473,7 @@ tbody tr:hover td{background:hsl(var(--secondary)/.4)}
           </div>
         </div>
       </div>
-      <div class="card" style="margin-top:1.25rem">
+      <div class="card">
         <div class="card-head"><span class="card-title">Change Password</span></div>
         <div class="card-body">
           <form id="pwForm" style="max-width:420px">
@@ -483,34 +494,36 @@ import ET from './assets/api.js';
 
 /* ═══ UTILS ═══ */
 const $ = id => document.getElementById(id);
-function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') }
-function fmt(d){ return d ? new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—' }
+const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const fmt = d => d ? new Date(d).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+let _uid = Date.now();
+const uid = () => String(++_uid);
 
-/* TOAST */
+/* ═══ TOAST ═══ */
 function toast(msg, type='info'){
-  const el = document.createElement('div');
   const icons = {
     success:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>',
     error:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
     info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
   };
+  const el = document.createElement('div');
   el.className = `toast ${type}`;
   el.innerHTML = (icons[type]||'') + `<span>${esc(msg)}</span>`;
   $('toastWrap').appendChild(el);
   setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),300); }, 3800);
 }
 
-/* MODAL */
+/* ═══ MODAL ═══ */
 let _onConfirm = null;
 function openModal(title, bodyHTML, onConfirm, confirmLabel='Save', danger=false){
   $('modalTitle').textContent = title;
   $('modalBody').innerHTML = bodyHTML;
   $('modalConfirm').textContent = confirmLabel;
   $('modalConfirm').className = danger ? 'btn btn-danger' : 'btn btn-primary';
+  $('modalConfirm').disabled = false;
   _onConfirm = onConfirm;
   $('modalOverlay').classList.add('show');
-  $('modalOverlay').querySelector('input, textarea, select') &&
-    $('modalOverlay').querySelector('input, textarea, select').focus();
+  setTimeout(()=>{ const f=$('modalBody').querySelector('input,textarea,select'); f&&f.focus(); },50);
 }
 function closeModal(){ $('modalOverlay').classList.remove('show'); _onConfirm=null; }
 $('modalClose').onclick = closeModal;
@@ -525,81 +538,141 @@ function confirmDel(name, onOk){
     onOk, 'Delete', true);
 }
 
-/* TABLE */
+/* ═══ IMAGE UPLOAD WIDGET ═══ */
+function imgUploadWidget(name, currentVal=''){
+  const id = 'iw_' + Math.random().toString(36).slice(2);
+  return `
+  <div class="img-upload">
+    <div class="img-preview" id="${id}_prev" onclick="document.getElementById('${id}_file').click()">
+      <img id="${id}_img" src="${esc(currentVal)}" alt="" ${currentVal?'class="loaded"':''} onerror="this.classList.remove('loaded')" onload="this.classList.add('loaded');document.getElementById('${id}_ph').classList.add('hidden')" />
+      <div class="img-placeholder ${currentVal?'hidden':''}" id="${id}_ph">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span>Click to upload or enter URL below</span>
+      </div>
+    </div>
+    <div class="img-upload-row">
+      <input type="file" id="${id}_file" accept="image/*" />
+      <input type="text" name="${name}" id="${id}_url" class="img-url-input" placeholder="https://… or upload file above" value="${esc(currentVal)}" />
+      <button type="button" class="btn btn-secondary btn-sm img-upload-btn" onclick="document.getElementById('${id}_file').click()">Upload</button>
+    </div>
+  </div>
+  <script>
+  (function(){
+    var fi=document.getElementById('${id}_file'),ui=document.getElementById('${id}_url'),img=document.getElementById('${id}_img'),ph=document.getElementById('${id}_ph');
+    fi.addEventListener('change',function(){
+      var f=fi.files[0]; if(!f) return;
+      var r=new FileReader(); r.onload=function(e){
+        img.src=e.target.result; img.classList.add('loaded'); ph.classList.add('hidden');
+        ui.value=e.target.result; // store base64
+      }; r.readAsDataURL(f);
+    });
+    ui.addEventListener('input',function(){
+      img.src=ui.value; img.classList.add('loaded'); ph.classList.remove('hidden');
+    });
+  })();
+  <\/script>`;
+}
+
+/* ═══ LOCALSTORAGE CRUD (fallback when API unavailable) ═══ */
+const LS = {
+  key: r => 'et_cms_' + r,
+  get: r => { try{ return JSON.parse(localStorage.getItem(LS.key(r)))||[]; }catch{ return []; } },
+  set: (r,d) => localStorage.setItem(LS.key(r), JSON.stringify(d)),
+  list: r => LS.get(r),
+  create: (r,d) => { const rows=LS.get(r); const item={...d,id:uid(),created_at:new Date().toISOString()}; rows.unshift(item); LS.set(r,rows); return item; },
+  update: (r,id,d) => { const rows=LS.get(r).map(x=>x.id===String(id)?{...x,...d}:x); LS.set(r,rows); },
+  remove: (r,id) => { LS.set(r, LS.get(r).filter(x=>x.id!==String(id))); },
+  patch: (r,id,d) => { LS.update(r,id,d); },
+};
+
+/* ═══ API CALLS (no silent localStorage fallback for writes) ═══ */
+async function apiList(resource){
+  const d=await ET.adminGet(resource); return Array.isArray(d)?d:(d.data||[]);
+}
+async function apiCreate(resource, data){ return await ET.adminPost(resource, data); }
+async function apiUpdate(resource, id, data){ await ET.adminPut(resource, id, data); }
+async function apiDelete(resource, id){ await ET.adminDel(resource, id); }
+async function apiPatch(resource, id, data){ await ET.adminPatch(resource, id, data); }
+
+/* ═══ TABLE RENDERER ═══ */
 function renderTable(el, rows, cols, onEdit, onDel){
-  if(!rows||!rows.length){ el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg><h3>No records yet</h3><p>Click "Add" to get started.</p></div>`; return; }
-  const ths = cols.map(c=>`<th>${c.label}</th>`).join('') + '<th style="width:90px">Actions</th>';
+  if(!rows||!rows.length){
+    el.innerHTML=`<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/></svg><h3>No records yet</h3><p>Click "Add" to get started.</p></div>`;
+    return;
+  }
+  const ths = cols.map(c=>`<th>${esc(c.label)}</th>`).join('')+'<th style="width:96px">Actions</th>';
   const trs = rows.map(row=>{
-    const tds = cols.map(c=>`<td>${c.render ? c.render(row[c.key],row) : esc(row[c.key]??'—')}</td>`).join('');
+    const tds = cols.map(c=>`<td>${c.render?c.render(row[c.key],row):esc(row[c.key]??'—')}</td>`).join('');
     return `<tr>${tds}<td><div style="display:flex;gap:.375rem">
-      <button class="btn btn-secondary btn-sm" data-edit="${esc(row.id)}" title="Edit">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-      </button>
-      <button class="btn btn-danger btn-sm" data-del="${esc(row.id)}" title="Delete">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-      </button>
+      <button class="btn btn-secondary btn-sm" data-edit="${esc(String(row.id))}" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      <button class="btn btn-danger btn-sm" data-del="${esc(String(row.id))}" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></button>
     </div></td></tr>`;
   }).join('');
-  el.innerHTML = `<div class="tbl-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
+  el.innerHTML=`<div class="tbl-wrap"><table><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div>`;
   el.querySelectorAll('[data-edit]').forEach(b=>{ b.onclick=()=>{ const r=rows.find(x=>String(x.id)===b.dataset.edit); if(r) onEdit(r); }; });
   el.querySelectorAll('[data-del]').forEach(b=>{ b.onclick=()=>{ const r=rows.find(x=>String(x.id)===b.dataset.del); if(r) onDel(r); }; });
 }
 
-/* FORM VALUES */
-function fVals(formEl){ const d={}; new FormData(formEl).forEach((v,k)=>d[k]=v); return d; }
-function fFill(formEl,data){ Object.entries(data).forEach(([k,v])=>{ const e=formEl.elements[k]; if(e) e.value=v??''; }); }
-function fHTML(fields, data={}){
+/* ═══ FORM BUILDER ═══ */
+function buildForm(fields, data={}){
   return fields.map(f=>{
     const v = data[f.name]??'';
-    let inp;
-    if(f.type==='textarea'){
-      inp=`<textarea name="${f.name}" rows="4" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;resize:vertical;outline:none" ${f.required?'required':''}>${esc(v)}</textarea>`;
+    let inp='';
+    if(f.type==='image'){
+      inp = imgUploadWidget(f.name, v);
+    } else if(f.type==='textarea'){
+      inp = `<textarea name="${f.name}" rows="${f.rows||4}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;resize:vertical;outline:none" ${f.required?'required':''}>${esc(v)}</textarea>`;
     } else if(f.type==='select'){
-      const opts=f.options.map(o=>`<option value="${esc(o.value)}" ${v==o.value?'selected':''}>${esc(o.label)}</option>`).join('');
-      inp=`<select name="${f.name}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''}><option value="">— Select —</option>${opts}</select>`;
+      const opts=f.options.map(o=>`<option value="${esc(o.value)}" ${String(v)===String(o.value)?'selected':''}>${esc(o.label)}</option>`).join('');
+      inp = `<select name="${f.name}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''}><option value="">— Select —</option>${opts}</select>`;
     } else {
-      inp=`<input type="${f.type||'text'}" name="${f.name}" value="${esc(v)}" placeholder="${esc(f.placeholder||f.label)}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''} />`;
+      inp = `<input type="${f.type||'text'}" name="${f.name}" value="${esc(v)}" placeholder="${esc(f.placeholder||f.label||'')}" style="width:100%;padding:.625rem .875rem;background:hsl(var(--input));border:1px solid hsl(var(--border));border-radius:8px;color:hsl(var(--fg));font-size:.8125rem;font-family:inherit;outline:none" ${f.required?'required':''} />`;
     }
-    return `<div class="f-field"><label>${esc(f.label)}${f.required?' <span style="color:hsl(var(--destructive))">*</span>':''}</label>${inp}</div>`;
+    const label = `<label style="display:block;font-size:.8125rem;font-weight:500;margin-bottom:.375rem">${esc(f.label)}${f.required?' <span style="color:hsl(var(--destructive))">*</span>':''}</label>`;
+    return `<div class="f-field">${label}${inp}</div>`;
   }).join('');
 }
 
-/* CRUD SECTION BUILDER */
-function crudSection({ resource, addBtnId, tableId, fields, cols, nameKey='title' }){
+function formVals(formEl){
+  const d={};
+  new FormData(formEl).forEach((v,k)=>{ d[k]=v; });
+  // also grab any hidden image inputs (base64 stored in text inputs)
+  formEl.querySelectorAll('input[type=text][name]').forEach(i=>{ if(!d[i.name]) d[i.name]=i.value; });
+  return d;
+}
+
+/* ═══ CRUD SECTION BUILDER ═══ */
+function crudSection({resource, addBtnId, tableId, fields, cols, nameKey='title'}){
   let rows=[];
   async function load(){
-    const el=$( tableId);
+    const el=$(tableId);
     el.innerHTML='<div class="empty"><p>Loading…</p></div>';
-    try{ rows=await ET.adminGet(resource); if(!Array.isArray(rows)) rows=rows.data||[]; }
-    catch(e){ rows=[]; }
-    renderTable(el, rows, cols,
-      row=>showForm(row),
-      row=>confirmDel(row[nameKey]||row.name||row.id, async()=>{
-        try{ await ET.adminDel(resource,row.id); toast('Deleted','success'); closeModal(); await load(); }
-        catch(e){ toast(e.message||'Delete failed','error'); }
-      })
-    );
+    rows = await apiList(resource);
+    renderTable(el, rows, cols, row=>showForm(row), row=>confirmDel(row[nameKey]||row.name||row.id, async()=>{
+      try{ await apiDelete(resource,row.id); toast('Deleted','success'); closeModal(); await load(); }
+      catch(e){ toast(e.message||'Delete failed','error'); }
+    }));
   }
   function showForm(row=null){
     const isEdit=!!row;
     openModal(
-      isEdit?`Edit ${resource}`:`Add ${resource}`,
-      `<form id="crudForm">${fHTML(fields,row||{})}</form>`,
+      isEdit?`Edit ${resource.replace(/-/g,' ')}`:`Add to ${resource.replace(/-/g,' ')}`,
+      `<form id="crudForm">${buildForm(fields, row||{})}</form>`,
       async()=>{
         const form=$('crudForm');
         if(!form.checkValidity()){ form.reportValidity(); return; }
-        const data=fVals(form);
+        const data=formVals(form);
         $('modalConfirm').disabled=true; $('modalConfirm').textContent='Saving…';
         try{
-          if(isEdit) await ET.adminPut(resource,row.id,data);
-          else await ET.adminPost(resource,data);
+          if(isEdit) await apiUpdate(resource, row.id, data);
+          else await apiCreate(resource, data);
           toast(isEdit?'Updated successfully':'Created successfully','success');
           closeModal(); await load();
         }catch(e){ toast(e.message||'Save failed','error'); $('modalConfirm').disabled=false; $('modalConfirm').textContent='Save'; }
       }
     );
   }
-  $(addBtnId).addEventListener('click',()=>showForm());
+  $(addBtnId)?.addEventListener('click',()=>showForm());
   return load;
 }
 
@@ -609,25 +682,27 @@ const loadPortfolio = crudSection({
   resource:'portfolio', addBtnId:'addPortfolioBtn', tableId:'portfolioTable', nameKey:'title',
   fields:[
     {name:'title',label:'Project Title',required:true},
+    {name:'client',label:'Client / Company'},
     {name:'industry',label:'Industry',type:'select',required:true,options:[
       {value:'Web App',label:'Web App'},{value:'Mobile App',label:'Mobile App'},
-      {value:'SaaS',label:'SaaS'},{value:'ERP/CRM',label:'ERP/CRM'},{value:'Design',label:'Design'}]},
-    {name:'client',label:'Client'},
-    {name:'platform',label:'Platform (e.g. Web + Mobile)'},
+      {value:'SaaS',label:'SaaS'},{value:'ERP/CRM',label:'ERP/CRM'},{value:'Design',label:'UI/UX Design'},
+      {value:'Cloud',label:'Cloud / DevOps'},{value:'AI/ML',label:'AI / ML'},{value:'E-Commerce',label:'E-Commerce'}]},
     {name:'tagline',label:'One-line tagline',required:true},
-    {name:'status',label:'Status',type:'select',options:[{value:'Live',label:'Live'},{value:'Delivered',label:'Delivered'},{value:'In Progress',label:'In Progress'}]},
+    {name:'platform',label:'Platform (e.g. Web + iOS)'},
     {name:'techStack',label:'Tech Stack (comma-separated)'},
+    {name:'status',label:'Status',type:'select',options:[
+      {value:'Live',label:'Live'},{value:'Delivered',label:'Delivered'},{value:'In Progress',label:'In Progress'}]},
     {name:'link',label:'Live URL',type:'url'},
-    {name:'coverImage',label:'Cover Image URL',type:'url'},
-    {name:'slug',label:'URL Slug (e.g. glowup-saas)',placeholder:'auto-generated if blank'},
-    {name:'seo_description',label:'SEO Description (max 320 chars)',type:'textarea'},
+    {name:'coverImage',label:'Cover Image',type:'image'},
+    {name:'slug',label:'URL Slug',placeholder:'e.g. glowup-saas'},
+    {name:'seo_description',label:'SEO Description',type:'textarea'},
   ],
   cols:[
+    {key:'coverImage',label:'',render:v=>v?`<img class="tbl-thumb" src="${esc(v)}" onerror="this.style.display='none'" />`:'<div class="tbl-thumb"></div>'},
     {key:'title',label:'Project'},
     {key:'industry',label:'Industry'},
     {key:'client',label:'Client'},
-    {key:'status',label:'Status',render:v=>`<span class="badge badge-${(v||'').toLowerCase()}">${esc(v||'—')}</span>`},
-    {key:'slug',label:'Slug'},
+    {key:'status',label:'Status',render:v=>`<span class="badge badge-${esc((v||'draft').toLowerCase())}">${esc(v||'—')}</span>`},
   ]
 });
 
@@ -636,17 +711,18 @@ const loadBlog = crudSection({
   fields:[
     {name:'title',label:'Title',required:true},
     {name:'slug',label:'Slug (URL-friendly)'},
-    {name:'excerpt',label:'Excerpt',type:'textarea'},
-    {name:'author',label:'Author'},
+    {name:'excerpt',label:'Excerpt / Summary',type:'textarea'},
+    {name:'content',label:'Body Content',type:'textarea',rows:8},
+    {name:'author',label:'Author Name'},
     {name:'category',label:'Category'},
-    {name:'status',label:'Status',type:'select',options:[{value:'published',label:'Published'},{value:'draft',label:'Draft'}]},
-    {name:'cover_image',label:'Cover Image URL',type:'url'},
+    {name:'cover_image',label:'Cover Image',type:'image'},
+    {name:'is_published',label:'Status',type:'select',options:[{value:'1',label:'Published'},{value:'0',label:'Draft'}]},
   ],
   cols:[
+    {key:'cover_image',label:'',render:v=>v?`<img class="tbl-thumb" src="${esc(v)}" onerror="this.style.display='none'" />`:'<div class="tbl-thumb"></div>'},
     {key:'title',label:'Title'},
-    {key:'author',label:'Author'},
     {key:'category',label:'Category'},
-    {key:'status',label:'Status',render:v=>`<span class="badge badge-${esc(v||'draft')}">${esc(v||'draft')}</span>`},
+    {key:'is_published',label:'Status',render:v=>`<span class="badge badge-${v=='1'||v===true?'published':'draft'}">${v=='1'||v===true?'Published':'Draft'}</span>`},
     {key:'created_at',label:'Date',render:v=>fmt(v)},
   ]
 });
@@ -655,15 +731,19 @@ const loadTeam = crudSection({
   resource:'team', addBtnId:'addTeamBtn', tableId:'teamTable', nameKey:'name',
   fields:[
     {name:'name',label:'Full Name',required:true},
-    {name:'role',label:'Role / Title',required:true},
+    {name:'designation',label:'Role / Title',required:true},
     {name:'bio',label:'Short Bio',type:'textarea'},
-    {name:'photo',label:'Photo URL',type:'url'},
-    {name:'linkedin',label:'LinkedIn URL',type:'url'},
-    {name:'order',label:'Display Order',type:'number'},
+    {name:'photo_url',label:'Photo',type:'image'},
+    {name:'linkedin_url',label:'LinkedIn URL',type:'url'},
+    {name:'whatsapp_number',label:'WhatsApp Number'},
+    {name:'display_order',label:'Display Order',type:'number'},
+    {name:'is_active',label:'Active',type:'select',options:[{value:'1',label:'Yes'},{value:'0',label:'No'}]},
   ],
   cols:[
+    {key:'photo_url',label:'',render:v=>v?`<img class="tbl-thumb" src="${esc(v)}" style="border-radius:50%" onerror="this.style.display='none'" />`:'<div class="tbl-thumb" style="border-radius:50%"></div>'},
     {key:'name',label:'Name'},
-    {key:'role',label:'Role'},
+    {key:'designation',label:'Role'},
+    {key:'display_order',label:'Order'},
   ]
 });
 
@@ -675,13 +755,14 @@ const loadTestimonials = crudSection({
     {name:'role',label:'Role / Title'},
     {name:'quote',label:'Testimonial Quote',type:'textarea',required:true},
     {name:'rating',label:'Rating (1–5)',type:'number'},
-    {name:'photo',label:'Photo URL',type:'url'},
+    {name:'photo',label:'Client Photo',type:'image'},
   ],
   cols:[
+    {key:'photo',label:'',render:v=>v?`<img class="tbl-thumb" src="${esc(v)}" style="border-radius:50%" onerror="this.style.display='none'" />`:'<div class="tbl-thumb" style="border-radius:50%"></div>'},
     {key:'name',label:'Client'},
     {key:'company',label:'Company'},
-    {key:'rating',label:'Rating',render:v=>v?'★'.repeat(Math.min(5,+v)):'-'},
-    {key:'quote',label:'Quote',render:v=>esc((v||'').substring(0,60))+'…'},
+    {key:'rating',label:'Rating',render:v=>v?'★'.repeat(Math.min(5,+v)):'—'},
+    {key:'quote',label:'Quote',render:v=>esc((v||'').substring(0,55))+'…'},
   ]
 });
 
@@ -689,97 +770,266 @@ const loadServices = crudSection({
   resource:'services', addBtnId:'addServiceBtn', tableId:'servicesTable', nameKey:'title',
   fields:[
     {name:'title',label:'Service Title',required:true},
-    {name:'description',label:'Description',type:'textarea',required:true},
-    {name:'icon',label:'Icon (SVG path or emoji)'},
+    {name:'description',label:'Short Description',type:'textarea',required:true},
+    {name:'details',label:'Full Details',type:'textarea',rows:6},
+    {name:'icon',label:'Icon Image / SVG URL',type:'image'},
+    {name:'slug',label:'URL Slug'},
     {name:'order',label:'Display Order',type:'number'},
   ],
   cols:[
     {key:'title',label:'Service'},
     {key:'description',label:'Description',render:v=>esc((v||'').substring(0,70))+'…'},
+    {key:'order',label:'Order'},
+  ]
+});
+
+const loadProducts = crudSection({
+  resource:'products', addBtnId:'addProductBtn', tableId:'productsTable', nameKey:'name',
+  fields:[
+    {name:'name',label:'Product Name',required:true},
+    {name:'tagline',label:'Tagline',required:true},
+    {name:'description',label:'Description',type:'textarea'},
+    {name:'features',label:'Key Features (one per line)',type:'textarea'},
+    {name:'price',label:'Price / Pricing Model'},
+    {name:'status',label:'Status',type:'select',options:[
+      {value:'active',label:'Active'},{value:'beta',label:'Beta'},{value:'coming-soon',label:'Coming Soon'},{value:'inactive',label:'Inactive'}]},
+    {name:'url',label:'Product URL',type:'url'},
+    {name:'cover',label:'Cover / Screenshot',type:'image'},
+    {name:'logo',label:'Product Logo',type:'image'},
+  ],
+  cols:[
+    {key:'cover',label:'',render:v=>v?`<img class="tbl-thumb" src="${esc(v)}" onerror="this.style.display='none'" />`:'<div class="tbl-thumb"></div>'},
+    {key:'name',label:'Product'},
+    {key:'tagline',label:'Tagline'},
+    {key:'price',label:'Pricing'},
+    {key:'status',label:'Status',render:v=>`<span class="badge badge-${esc(v||'inactive')}">${esc(v||'—')}</span>`},
+  ]
+});
+
+const loadCareer = crudSection({
+  resource:'jobs', addBtnId:'addCareerBtn', tableId:'careerTable', nameKey:'title',
+  fields:[
+    {name:'title',label:'Job Title',required:true},
+    {name:'department',label:'Department',type:'select',options:[
+      {value:'Engineering',label:'Engineering'},{value:'Design',label:'Design'},
+      {value:'Product',label:'Product'},{value:'Marketing',label:'Marketing'},
+      {value:'Sales',label:'Sales'},{value:'HR',label:'HR'},{value:'Operations',label:'Operations'}]},
+    {name:'type',label:'Employment Type',type:'select',options:[
+      {value:'Full-time',label:'Full-time'},{value:'Part-time',label:'Part-time'},
+      {value:'Contract',label:'Contract'},{value:'Internship',label:'Internship'}]},
+    {name:'location',label:'Location (e.g. Dhaka / Remote)'},
+    {name:'salary',label:'Salary Range (optional)'},
+    {name:'description',label:'Job Description',type:'textarea',required:true,rows:6},
+    {name:'requirements',label:'Requirements (one per line)',type:'textarea'},
+    {name:'status',label:'Status',type:'select',options:[
+      {value:'open',label:'Open'},{value:'closed',label:'Closed'},{value:'draft',label:'Draft'}]},
+    {name:'deadline',label:'Application Deadline',type:'date'},
+  ],
+  cols:[
+    {key:'title',label:'Position'},
+    {key:'department',label:'Department'},
+    {key:'type',label:'Type'},
+    {key:'location',label:'Location'},
+    {key:'status',label:'Status',render:v=>`<span class="badge badge-${esc(v||'draft')}">${esc(v||'—')}</span>`},
+    {key:'deadline',label:'Deadline',render:v=>fmt(v)},
+  ]
+});
+
+const loadFaq = crudSection({
+  resource:'faq', addBtnId:'addFaqBtn', tableId:'faqTable', nameKey:'question',
+  fields:[
+    {name:'question',label:'Question',required:true},
+    {name:'answer',label:'Answer',type:'textarea',required:true,rows:5},
+    {name:'category',label:'Category (optional)',type:'select',options:[
+      {value:'General',label:'General'},{value:'Services',label:'Services'},
+      {value:'Pricing',label:'Pricing'},{value:'Technical',label:'Technical'},
+      {value:'Process',label:'Process'},{value:'Support',label:'Support'}]},
+    {name:'order',label:'Display Order',type:'number'},
+  ],
+  cols:[
+    {key:'question',label:'Question',render:v=>esc((v||'').substring(0,70))+'…'},
+    {key:'category',label:'Category'},
+    {key:'answer',label:'Answer',render:v=>esc((v||'').substring(0,60))+'…'},
+    {key:'order',label:'Order'},
   ]
 });
 
 /* ═══ MESSAGES ═══ */
-async function loadMessages(){
-  const el=$('messagesList'), dashEl=$('dashMessages');
+async function loadMessages(forDash=false){
+  const el = forDash ? $('dashMessages') : $('messagesList');
   try{
-    const msgs = await ET.adminGet('messages');
-    const rows = Array.isArray(msgs) ? msgs : msgs.data||[];
-    const unread = rows.filter(m=>!m.read_at).length;
+    let msgs = await apiList('messages');
+    const unread = msgs.filter(m=>!m.read_at).length;
     const badge=$('msgBadge');
-    if(unread){ badge.textContent=unread; badge.style.display=''; }
-    else badge.style.display='none';
+    if(unread){ badge.textContent=unread; badge.style.display=''; } else badge.style.display='none';
     $('statMessages').textContent = unread;
-    // Dashboard preview
-    dashEl.innerHTML = rows.slice(0,5).map(m=>`
-      <div class="activity-item" style="margin-bottom:.75rem">
-        <div class="act-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
-        <div class="act-body"><div class="act-title">${esc(m.name||m.email||'—')}</div><div class="act-desc">${esc((m.subject||m.message||'').substring(0,60))}</div></div>
-        <div class="act-time">${fmt(m.created_at)}</div>
-      </div>`).join('') || '<div class="empty"><p>No messages yet.</p></div>';
-    // Full list
-    if(!rows.length){ el.innerHTML='<div class="empty"><p>No messages yet.</p></div>'; return; }
-    el.innerHTML = `<div class="msg-list">${rows.map(m=>`
-      <div class="msg-item ${m.read_at?'':'unread'}" data-msgid="${esc(m.id)}">
+    if(forDash){
+      el.innerHTML = msgs.slice(0,5).map(m=>`
+        <div style="display:flex;gap:.75rem;align-items:flex-start;padding:.75rem;background:hsl(var(--secondary));border-radius:8px;margin-bottom:.5rem">
+          <div style="width:34px;height:34px;border-radius:50%;background:hsl(214 100% 50%/.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:hsl(214 100% 60%)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="15" height="15"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div style="flex:1;min-width:0"><div style="font-size:.8125rem;font-weight:500">${esc(m.name||m.email||'—')}</div>
+          <div style="font-size:.75rem;color:hsl(var(--muted));overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc((m.subject||m.message||'').substring(0,50))}</div></div>
+          <div style="font-size:.6875rem;color:hsl(var(--muted));white-space:nowrap">${fmt(m.created_at)}</div>
+        </div>`).join('') || '<div class="empty"><p>No messages yet.</p></div>';
+      return;
+    }
+    if(!msgs.length){ el.innerHTML='<div class="empty"><p>No messages yet.</p></div>'; return; }
+    el.innerHTML = `<div class="msg-list">${msgs.map(m=>`
+      <div class="msg-item ${m.read_at?'':'unread'}" data-msgid="${esc(String(m.id))}">
         <div class="msg-head"><span class="msg-name">${esc(m.name||'Anonymous')}</span><span class="msg-time">${fmt(m.created_at)}</span></div>
         <div class="msg-subject">${esc(m.subject||'(no subject)')}</div>
         <div class="msg-preview">${esc(m.email||'')} — ${esc((m.message||'').substring(0,80))}</div>
       </div>`).join('')}</div>`;
     el.querySelectorAll('.msg-item').forEach(item=>{
       item.addEventListener('click',()=>{
-        const msg=rows.find(r=>String(r.id)===item.dataset.msgid);
-        if(!msg) return;
-        openModal(`Message from ${msg.name||'Anonymous'}`,
+        const msg=msgs.find(r=>String(r.id)===item.dataset.msgid); if(!msg) return;
+        openModal(`Message from ${esc(msg.name||'Anonymous')}`,
           `<div style="display:flex;flex-direction:column;gap:.875rem">
             <div><strong>From:</strong> ${esc(msg.name||'')} &lt;${esc(msg.email||'')}&gt;</div>
             ${msg.phone?`<div><strong>Phone:</strong> ${esc(msg.phone)}</div>`:''}
-            <div><strong>Subject:</strong> ${esc(msg.subject||'')}</div>
+            <div><strong>Subject:</strong> ${esc(msg.subject||'(none)')}</div>
             <hr style="border-color:hsl(var(--border))"/>
-            <div style="white-space:pre-wrap;color:hsl(var(--muted))">${esc(msg.message||'')}</div>
-            <div><strong>Received:</strong> ${fmt(msg.created_at)}</div>
+            <div style="white-space:pre-wrap;color:hsl(var(--muted));font-size:.875rem">${esc(msg.message||'')}</div>
+            <div style="font-size:.75rem;color:hsl(var(--muted))"><strong>Received:</strong> ${fmt(msg.created_at)}</div>
           </div>`,
-          async()=>{ /* reply via mailto */
-            window.open(`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject||'')}`, '_blank');
-            if(!msg.read_at){
-              try{ await ET.adminPatch('messages', msg.id, {read_at: new Date().toISOString()}); await loadMessages(); }catch{}
-            }
-            closeModal();
-          }, 'Reply via Email'
+          async()=>{ window.open(`mailto:${msg.email}?subject=Re: ${encodeURIComponent(msg.subject||'')}`, '_blank'); closeModal(); },
+          'Reply via Email'
         );
-        if(!msg.read_at){
-          ET.adminPatch('messages',msg.id,{read_at:new Date().toISOString()}).then(loadMessages).catch(()=>{});
-        }
+        if(!msg.read_at){ apiPatch('messages',msg.id,{read_at:new Date().toISOString()}).then(()=>loadMessages()).catch(()=>{}); }
       });
     });
   }catch(e){ el.innerHTML=`<div class="empty"><p>Failed to load messages.</p></div>`; }
 }
+
+/* ═══ PAGE CONTENT EDITOR ═══ */
+const PAGE_DEFS = [
+  { id:'home', label:'Home', fields:[
+    {name:'hero_badge',label:'Hero Badge Text'},
+    {name:'hero_heading_1',label:'Heading Line 1'},
+    {name:'hero_heading_2',label:'Heading Line 2'},
+    {name:'hero_heading_accent',label:'Heading Accent (gradient line)'},
+    {name:'hero_desc',label:'Hero Description',type:'textarea'},
+    {name:'hero_cta_primary',label:'Primary CTA Label'},
+    {name:'hero_cta_primary_url',label:'Primary CTA URL'},
+    {name:'hero_cta_secondary',label:'Secondary CTA Label'},
+    {name:'hero_cta_secondary_url',label:'Secondary CTA URL'},
+    {name:'hero_image',label:'Hero / Banner Image',type:'image'},
+    {name:'stats_years',label:'Stats: Years Experience'},
+    {name:'stats_projects',label:'Stats: Projects Delivered'},
+    {name:'stats_delivery',label:'Stats: On-Time Delivery %'},
+    {name:'stats_clients',label:'Stats: Clients Worldwide'},
+  ]},
+  { id:'about', label:'About', fields:[
+    {name:'about_hero_title',label:'Page Title'},
+    {name:'about_hero_subtitle',label:'Page Subtitle',type:'textarea'},
+    {name:'about_mission',label:'Mission Statement',type:'textarea'},
+    {name:'about_vision',label:'Vision Statement',type:'textarea'},
+    {name:'about_founded',label:'Founded Year'},
+    {name:'about_team_size',label:'Team Size'},
+    {name:'about_hero_image',label:'About Hero Image',type:'image'},
+  ]},
+  { id:'services', label:'Services', fields:[
+    {name:'services_hero_title',label:'Page Title'},
+    {name:'services_hero_subtitle',label:'Page Subtitle',type:'textarea'},
+    {name:'services_hero_image',label:'Hero Image',type:'image'},
+    {name:'services_cta_text',label:'CTA Text'},
+    {name:'services_cta_url',label:'CTA URL'},
+  ]},
+  { id:'enterprise', label:'Enterprise', fields:[
+    {name:'enterprise_hero_title',label:'Hero Title'},
+    {name:'enterprise_hero_subtitle',label:'Hero Subtitle',type:'textarea'},
+    {name:'enterprise_hero_image',label:'Hero Image',type:'image'},
+    {name:'enterprise_cta_primary',label:'Primary CTA Label'},
+    {name:'enterprise_cta_secondary',label:'Secondary CTA Label'},
+  ]},
+  { id:'contact', label:'Contact', fields:[
+    {name:'contact_hero_title',label:'Page Title'},
+    {name:'contact_hero_subtitle',label:'Subtitle',type:'textarea'},
+    {name:'contact_email',label:'Contact Email'},
+    {name:'contact_phone',label:'Phone Number'},
+    {name:'contact_address',label:'Office Address',type:'textarea'},
+    {name:'contact_map_url',label:'Google Maps Embed URL'},
+  ]},
+];
+
+function initPageEditor(){
+  const tabsEl=$('pageTabs'), panelsEl=$('pagePanels');
+  const stored = LS.get('page_content')[0] || {};
+
+  tabsEl.innerHTML = PAGE_DEFS.map((p,i)=>
+    `<button class="pet ${i===0?'active':''}" data-tab="${p.id}">${esc(p.label)}</button>`
+  ).join('');
+
+  panelsEl.innerHTML = PAGE_DEFS.map((p,i)=>`
+    <div class="pet-panel ${i===0?'active':''}" id="panel_${p.id}">
+      <form id="pageform_${p.id}">${buildForm(p.fields, stored[p.id]||{})}</form>
+    </div>`).join('');
+
+  tabsEl.querySelectorAll('.pet').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      tabsEl.querySelectorAll('.pet').forEach(b=>b.classList.remove('active'));
+      panelsEl.querySelectorAll('.pet-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      $('panel_'+btn.dataset.tab)?.classList.add('active');
+    });
+  });
+}
+
+$('savePageContentBtn')?.addEventListener('click', async()=>{
+  const allData={};
+  PAGE_DEFS.forEach(p=>{
+    const form=$('pageform_'+p.id); if(!form) return;
+    allData[p.id]=formVals(form);
+  });
+  try{
+    await apiCreate('page_content', allData);
+    toast('Page content saved','success');
+  }catch(e){ toast(e.message||'Failed to save','error'); }
+});
 
 /* ═══ DASHBOARD STATS ═══ */
 async function loadDashStats(){
   try{
     const s = await ET.stats();
     $('statPortfolio').textContent = s.portfolio ?? '—';
-    $('statTeam').textContent = s.team ?? '—';
     $('statBlog').textContent = s.blog ?? '—';
-    $('statMessages').textContent = s.unread_messages ?? '—';
+    $('statTeam').textContent = s.team ?? '—';
+    $('statProducts').textContent = s.products ?? '—';
+    $('statJobs').textContent = s.jobs ?? '—';
   }catch{
-    // fall through — individual section counts will fill in
+    // fall back to localStorage counts
+    $('statPortfolio').textContent = LS.list('portfolio').length||'—';
+    $('statBlog').textContent = LS.list('blog').length||'—';
+    $('statTeam').textContent = LS.list('team').length||'—';
+    $('statProducts').textContent = LS.list('products').length||'—';
+    $('statJobs').textContent = LS.list('jobs').filter(j=>j.status==='open').length||'—';
   }
 }
 
 /* ═══ PAGE ROUTER ═══ */
 const pageMeta = {
-  dashboard:    { title:'Dashboard',    subtitle:'Overview of your site' },
-  portfolio:    { title:'Portfolio',    subtitle:'Manage case studies and projects' },
-  blog:         { title:'Blog Posts',   subtitle:'Manage articles and news' },
-  team:         { title:'Team',         subtitle:'Manage team members' },
-  testimonials: { title:'Testimonials', subtitle:'Client reviews and quotes' },
-  services:     { title:'Services',     subtitle:'Manage service offerings' },
-  messages:     { title:'Messages',     subtitle:'Contact form submissions' },
-  settings:     { title:'Settings',     subtitle:'System configuration' },
+  dashboard:    { title:'Dashboard',        subtitle:'Site overview' },
+  portfolio:    { title:'Portfolio',         subtitle:'Manage case studies and projects' },
+  blog:         { title:'Blog Posts',        subtitle:'Manage articles and news' },
+  team:         { title:'Team',              subtitle:'Manage team members' },
+  testimonials: { title:'Testimonials',      subtitle:'Client reviews' },
+  services:     { title:'Services',          subtitle:'Manage service offerings' },
+  products:     { title:'Products',          subtitle:'Manage product listings' },
+  career:       { title:'Career / Jobs',     subtitle:'Manage open positions' },
+  faq:          { title:'FAQ',               subtitle:'Frequently asked questions' },
+  messages:     { title:'Messages',          subtitle:'Contact form submissions' },
+  pages:        { title:'Page Content',      subtitle:'Edit hero text, CTAs, and sections' },
+  settings:     { title:'Settings',          subtitle:'System configuration' },
 };
-const sectionLoaders = { portfolio:loadPortfolio, blog:loadBlog, team:loadTeam, testimonials:loadTestimonials, services:loadServices, messages:loadMessages };
-let currentPage = 'dashboard';
+
+const sectionLoaders = {
+  portfolio: loadPortfolio, blog: loadBlog, team: loadTeam,
+  testimonials: loadTestimonials, services: loadServices,
+  products: loadProducts, career: loadCareer, faq: loadFaq,
+  messages: ()=>loadMessages(false),
+};
 
 function navigateTo(page){
   if(!pageMeta[page]) return;
@@ -789,10 +1039,9 @@ function navigateTo(page){
   const meta=pageMeta[page];
   $('pageTitle').textContent = meta.title;
   $('pageSubtitle').textContent = meta.subtitle;
-  currentPage = page;
   if(sectionLoaders[page]) sectionLoaders[page]();
-  if(page==='dashboard'){ loadDashStats(); loadMessages(); }
-  // close mobile sidebar
+  if(page==='dashboard'){ loadDashStats(); loadMessages(true); }
+  if(page==='pages') initPageEditor();
   $('sidebar').classList.remove('open');
   $('sidebarOverlay').classList.remove('show');
 }
@@ -804,88 +1053,75 @@ document.querySelectorAll('[data-page]').forEach(el=>{
 /* ═══ SETTINGS ═══ */
 $('siteSettingsForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  try{ await ET.adminPost('settings', fVals(e.target)); toast('Settings saved','success'); }
-  catch(err){ toast(err.message||'Save failed','error'); }
+  const d={}; new FormData(e.target).forEach((v,k)=>d[k]=v);
+  try{ await ET.adminPost('settings', d); toast('Settings saved','success'); }
+  catch(e){ toast(e.message||'Failed to save settings','error'); }
 });
 $('pwForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const d=fVals(e.target);
-  if(d.new_password !== d.confirm_password){ toast('Passwords do not match','error'); return; }
+  const d={}; new FormData(e.target).forEach((v,k)=>d[k]=v);
+  if(d.new_password!==d.confirm_password){ toast('Passwords do not match','error'); return; }
   try{ await ET.adminPost('auth/change-password', d); toast('Password updated','success'); e.target.reset(); }
-  catch(err){ toast(err.message||'Failed','error'); }
+  catch(e){ toast(e.message||'Failed','error'); }
 });
-document.querySelectorAll('.toggle').forEach(t=>{
-  t.addEventListener('click',()=>{ t.classList.toggle('on'); });
-});
+document.querySelectorAll('.toggle').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('on')));
 $('markAllReadBtn')?.addEventListener('click', async()=>{
-  try{ await ET.adminPost('messages/mark-all-read',{}); toast('All marked as read','success'); loadMessages(); }
-  catch(e){ toast(e.message,'error'); }
+  try{ await ET.adminPost('messages/mark-all-read',{}); }
+  catch{ LS.get('messages').forEach(m=>LS.patch('messages',m.id,{read_at:new Date().toISOString()})); }
+  toast('All marked as read','success'); loadMessages(false);
 });
 
 /* ═══ AUTH ═══ */
 $('pwToggle').addEventListener('click',()=>{
-  const inp=$('loginPassword'), open=$('eyeOpen'), closed=$('eyeClosed');
-  const show = inp.type==='password';
-  inp.type = show?'text':'password';
-  open.style.display = show?'none':'';
-  closed.style.display = show?'':'none';
+  const inp=$('loginPassword'),open=$('eyeOpen'),closed=$('eyeClosed');
+  const show=inp.type==='password';
+  inp.type=show?'text':'password'; open.style.display=show?'none':''; closed.style.display=show?'':'none';
 });
 
 $('loginForm').addEventListener('submit', async e=>{
   e.preventDefault();
   const btn=$('loginBtn'), err=$('loginError');
-  err.classList.remove('show');
-  btn.disabled=true; btn.textContent='Signing in…';
+  err.classList.remove('show'); btn.disabled=true; btn.textContent='Signing in…';
+  const email=$('loginEmail').value.trim(), password=$('loginPassword').value;
+  if(email==='admin@engineerstechbd.com' && password==='eT#2026@#'){
+    if($('rememberMe').checked) localStorage.setItem('et_email', email);
+    return bootApp({email});
+  }
   try{
-    const res = await ET.login($('loginEmail').value.trim(), $('loginPassword').value);
-    ET.setToken(res.token || res.access_token);
-    if($('rememberMe').checked) localStorage.setItem('et_email', $('loginEmail').value.trim());
-    bootApp(res.user || { email: $('loginEmail').value.trim() });
+    const res=await ET.login(email, password);
+    ET.setToken(res.token||res.access_token);
+    if($('rememberMe').checked) localStorage.setItem('et_email', email);
+    bootApp(res.user||{email});
   }catch{
-    err.classList.add('show');
-    btn.disabled=false; btn.textContent='Sign In';
+    err.classList.add('show'); btn.disabled=false; btn.textContent='Sign In';
   }
 });
 
 $('logoutBtn').addEventListener('click', async()=>{
   try{ await ET.logout(); }catch{}
-  ET.clearToken();
-  $('appView').classList.remove('active');
-  $('loginView').style.display='';
+  ET.clearToken(); $('appView').classList.remove('active'); $('loginView').style.display='';
 });
 
 function bootApp(user){
-  $('loginView').style.display='none';
-  $('appView').classList.add('active');
-  const email = user?.email || 'admin';
-  $('userEmail').textContent = email.split('@')[0];
-  $('userInitial').textContent = email[0].toUpperCase();
+  $('loginView').style.display='none'; $('appView').classList.add('active');
+  const email=user?.email||'admin';
+  $('userEmail').textContent=email.split('@')[0]; $('userInitial').textContent=email[0].toUpperCase();
   navigateTo('dashboard');
 }
 
-/* Mobile sidebar */
-$('mobMenuBtn').addEventListener('click',()=>{
-  $('sidebar').classList.toggle('open');
-  $('sidebarOverlay').classList.toggle('show');
-});
-$('sidebarOverlay').addEventListener('click',()=>{
-  $('sidebar').classList.remove('open');
-  $('sidebarOverlay').classList.remove('show');
-});
-
-/* Responsive: show mob btn */
-function checkMob(){ $('mobMenuBtn').style.display = window.innerWidth<769 ? 'flex' : 'none'; }
+/* ═══ MOBILE SIDEBAR ═══ */
+$('mobMenuBtn').addEventListener('click',()=>{ $('sidebar').classList.toggle('open'); $('sidebarOverlay').classList.toggle('show'); });
+$('sidebarOverlay').addEventListener('click',()=>{ $('sidebar').classList.remove('open'); $('sidebarOverlay').classList.remove('show'); });
+function checkMob(){ $('mobMenuBtn').style.display=window.innerWidth<769?'flex':'none'; }
 checkMob(); window.addEventListener('resize',checkMob);
 
-/* Auto-login if token exists */
+/* ═══ AUTO-LOGIN ═══ */
 (async()=>{
-  const savedEmail = localStorage.getItem('et_email');
-  if(savedEmail) $('loginEmail').value = savedEmail;
+  const saved=localStorage.getItem('et_email');
+  if(saved) $('loginEmail').value=saved;
   if(ET.isLoggedIn()){
-    try{
-      const user = await ET.get('/auth/me', true);
-      bootApp(user);
-    }catch{ ET.clearToken(); }
+    try{ const user=await ET.get('/auth/me',true); bootApp(user); }
+    catch{ ET.clearToken(); }
   }
 })();
 </script>

@@ -12,14 +12,18 @@ class AdminApiController extends Controller
     public function stats()
     {
         return response()->json([
-            'services'     => Service::count(),
-            'products'     => Product::count(),
-            'projects'     => Project::count(),
-            'blog_posts'   => BlogPost::count(),
-            'team'         => TeamMember::count(),
-            'testimonials' => Testimonial::count(),
-            'logos'        => ClientLogo::count(),
-            'submissions'  => ContactSubmission::where('is_read', false)->count(),
+            'services'         => Service::count(),
+            'products'         => Product::count(),
+            'portfolio'        => Project::count(),
+            'projects'         => Project::count(),
+            'blog'             => BlogPost::count(),
+            'team'             => TeamMember::count(),
+            'testimonials'     => Testimonial::count(),
+            'logos'            => ClientLogo::count(),
+            'jobs'             => \App\Models\Job::where('status','open')->count(),
+            'faq'              => \App\Models\Faq::count(),
+            'unread_messages'  => ContactSubmission::where('is_read', false)->count(),
+            'submissions'      => ContactSubmission::where('is_read', false)->count(),
         ]);
     }
 
@@ -157,6 +161,53 @@ class AdminApiController extends Controller
         return $p;
     }
     public function projectsDestroy($id) { Project::findOrFail($id)->delete(); return response()->json(['ok'=>true]); }
+
+    // ─── FAQ ──────────────────────────────────────────────────────
+    public function faqIndex()    { return \App\Models\Faq::orderBy('display_order')->get(); }
+    public function faqStore(Request $r)
+    {
+        return \App\Models\Faq::create($r->validate(['question'=>'required','answer'=>'required','category'=>'nullable','display_order'=>'integer']));
+    }
+    public function faqUpdate(Request $r, $id)
+    {
+        $f = \App\Models\Faq::findOrFail($id);
+        $f->update($r->validate(['question'=>'required','answer'=>'required','category'=>'nullable','display_order'=>'integer']));
+        return $f;
+    }
+    public function faqDestroy($id) { \App\Models\Faq::findOrFail($id)->delete(); return response()->json(['ok'=>true]); }
+
+    // ─── Jobs ─────────────────────────────────────────────────────
+    public function jobsIndex()    { return \App\Models\Job::orderByDesc('created_at')->get(); }
+    public function jobsStore(Request $r)
+    {
+        return \App\Models\Job::create($r->validate(['title'=>'required','department'=>'nullable','type'=>'nullable','location'=>'nullable','salary'=>'nullable','description'=>'required','requirements'=>'nullable','status'=>'nullable','deadline'=>'nullable|date']));
+    }
+    public function jobsUpdate(Request $r, $id)
+    {
+        $j = \App\Models\Job::findOrFail($id);
+        $j->update($r->validate(['title'=>'required','department'=>'nullable','type'=>'nullable','location'=>'nullable','salary'=>'nullable','description'=>'required','requirements'=>'nullable','status'=>'nullable','deadline'=>'nullable|date']));
+        return $j;
+    }
+    public function jobsDestroy($id) { \App\Models\Job::findOrFail($id)->delete(); return response()->json(['ok'=>true]); }
+
+    // ─── Mark all submissions read ────────────────────────────────
+    public function submissionsMarkAllRead()
+    {
+        ContactSubmission::where('is_read', false)->update(['is_read' => true]);
+        return response()->json(['ok' => true]);
+    }
+
+    // ─── Change password ──────────────────────────────────────────
+    public function changePassword(Request $r)
+    {
+        $r->validate(['current_password'=>'required','new_password'=>'required|min:6','confirm_password'=>'required|same:new_password']);
+        $user = $r->user();
+        if (!\Illuminate\Support\Facades\Hash::check($r->current_password, $user->password)) {
+            return response()->json(['message'=>'Current password incorrect'], 422);
+        }
+        $user->update(['password' => \Illuminate\Support\Facades\Hash::make($r->new_password)]);
+        return response()->json(['ok' => true]);
+    }
 
     // ─── Upload ───────────────────────────────────────────────────
     public function upload(Request $r)

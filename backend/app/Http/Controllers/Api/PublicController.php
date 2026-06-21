@@ -66,6 +66,11 @@ class PublicController extends Controller
         return Project::where(fn($q) => $q->where('id', $id)->orWhere('slug', $id))->firstOrFail();
     }
 
+    public function faq()
+    {
+        return \App\Models\Faq::orderBy('display_order')->get();
+    }
+
     public function contact(Request $request)
     {
         $data = $request->validate([

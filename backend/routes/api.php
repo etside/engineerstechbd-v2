@@ -14,12 +14,16 @@ Route::get('/blog/{slug}',  [PublicController::class, 'blogPost']);
 Route::get('/team',         [PublicController::class, 'team']);
 Route::get('/testimonials', [PublicController::class, 'testimonials']);
 Route::get('/logos',        [PublicController::class, 'logos']);
+Route::get('/projects',     [PublicController::class, 'projects']);
+Route::get('/portfolio',    [PublicController::class, 'projects']);
+Route::get('/faq',          [PublicController::class, 'faq']);
 Route::post('/contact',     [PublicController::class, 'contact']);
 
 // Auth
 Route::post('/auth/login',  [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/auth/user',    [AuthController::class, 'user'])->middleware('auth:sanctum');
+Route::get('/auth/me',      [AuthController::class, 'user'])->middleware('auth:sanctum');
 
 // Admin (protected)
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
@@ -72,11 +76,36 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     // Image upload
     Route::post('/upload',            [AdminApiController::class, 'upload']);
 
-    // Projects
+    // Projects (also aliased as /portfolio for frontend)
     Route::get('/projects',           [AdminApiController::class, 'projectsIndex']);
     Route::post('/projects',          [AdminApiController::class, 'projectsStore']);
     Route::put('/projects/{id}',      [AdminApiController::class, 'projectsUpdate']);
     Route::delete('/projects/{id}',   [AdminApiController::class, 'projectsDestroy']);
+
+    Route::get('/portfolio',          [AdminApiController::class, 'projectsIndex']);
+    Route::post('/portfolio',         [AdminApiController::class, 'projectsStore']);
+    Route::put('/portfolio/{id}',     [AdminApiController::class, 'projectsUpdate']);
+    Route::delete('/portfolio/{id}',  [AdminApiController::class, 'projectsDestroy']);
+
+    // Submissions (also aliased as /messages for frontend)
+    Route::get('/messages',           [AdminApiController::class, 'submissions']);
+    Route::patch('/messages/{id}',    [AdminApiController::class, 'submissionMarkRead']);
+    Route::post('/messages/mark-all-read', [AdminApiController::class, 'submissionsMarkAllRead']);
+
+    // FAQ
+    Route::get('/faq',                [AdminApiController::class, 'faqIndex']);
+    Route::post('/faq',               [AdminApiController::class, 'faqStore']);
+    Route::put('/faq/{id}',           [AdminApiController::class, 'faqUpdate']);
+    Route::delete('/faq/{id}',        [AdminApiController::class, 'faqDestroy']);
+
+    // Jobs / Career
+    Route::get('/jobs',               [AdminApiController::class, 'jobsIndex']);
+    Route::post('/jobs',              [AdminApiController::class, 'jobsStore']);
+    Route::put('/jobs/{id}',          [AdminApiController::class, 'jobsUpdate']);
+    Route::delete('/jobs/{id}',       [AdminApiController::class, 'jobsDestroy']);
+
+    // Change password
+    Route::post('/auth/change-password', [AdminApiController::class, 'changePassword']);
 });
 
 // ─── MCP / AI v1 Routes ───────────────────────────────────────────────────────

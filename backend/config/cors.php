@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173', 'https://engineerstechbd.com'],
+    'allowed_origins' => ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3001', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082', 'http://localhost:5173', 'https://engineerstechbd.com', 'https://www.engineerstechbd.com'],
 
     'allowed_origins_patterns' => [],
 

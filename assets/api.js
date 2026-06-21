@@ -1,4 +1,7 @@
-const API_BASE = (typeof window !== 'undefined' && window.ET_API_BASE) || 'https://api.engineerstechbd.com/api';
+const API_BASE = (typeof window !== 'undefined' && window.ET_API_BASE) ||
+  (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
+    ? 'https://api.engineerstechbd.com/api'
+    : 'http://localhost:8000/api');
 
 export function escapeHtml(str) {
   if (str == null) return '';
@@ -15,7 +18,8 @@ async function api(method, path, body, auth = false) {
   const res = await fetch(API_BASE + path, {
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined
+    body: body ? JSON.stringify(body) : undefined,
+    credentials: 'include',
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
@@ -43,19 +47,20 @@ const ET = {
   getProducts:     () => ET.get('/products'),
   getProjects:     () => ET.get('/projects'),
   getPortfolio:    () => ET.get('/portfolio'),
+  getFaq:          () => ET.get('/faq'),
   postContact:     (data) => ET.post('/contact', data),
 
   // Auth
   login:  (email, password) => ET.post('/auth/login', { email, password }),
   logout: () => ET.post('/auth/logout', {}, true),
 
-  // Admin
-  stats: () => ET.get('/admin/stats', true),
-  adminGet:  (r) => ET.get(`/admin/${r}`, true),
-  adminPost: (r, d) => ET.post(`/admin/${r}`, d, true),
-  adminPut:  (r, id, d) => ET.put(`/admin/${r}/${id}`, d, true),
-  adminDel:  (r, id) => ET.del(`/admin/${r}/${id}`, true),
-  adminPatch:(r, id, d) => ET.patch(`/admin/${r}/${id}`, d, true),
+  // Admin — generic
+  stats:      () => ET.get('/admin/stats', true),
+  adminGet:   (r) => ET.get(`/admin/${r}`, true),
+  adminPost:  (r, d) => ET.post(`/admin/${r}`, d, true),
+  adminPut:   (r, id, d) => ET.put(`/admin/${r}/${id}`, d, true),
+  adminDel:   (r, id) => ET.del(`/admin/${r}/${id}`, true),
+  adminPatch: (r, id, d) => ET.patch(`/admin/${r}/${id}`, d, true),
 
   // File upload (multipart)
   upload: async (file) => {
@@ -63,11 +68,12 @@ const ET = {
     const res = await fetch(API_BASE + '/admin/upload', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + getToken(), 'Accept': 'application/json' },
-      body: fd
+      credentials: 'include',
+      body: fd,
     });
     if (!res.ok) throw new Error('Upload failed');
     return res.json();
-  }
+  },
 };
 
 export default ET;
